@@ -39,7 +39,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.ts.av.access_vpn"
+    namespace "com.access.vpn.ui"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion = "25.1.8937393"
 
