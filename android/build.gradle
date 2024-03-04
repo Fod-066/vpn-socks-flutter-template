@@ -1,17 +1,30 @@
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    apply from: "${rootProject.projectDir}/repositories.gradle.kts"
+    ext.kotlin_version = '1.8.10'
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath 'com.android.tools.build:gradle:7.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.android.gms:oss-licenses-plugin:0.10.6'
+        classpath "com.vanniktech:gradle-maven-publish-plugin:0.24.0"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.7.20"
+        classpath "org.mozilla.rust-android-gradle:plugin:0.9.3"
+        classpath "com.github.megatronking.stringfog:gradle-plugin:4.0.1"
+        classpath "com.github.megatronking.stringfog:xor:4.0.1"
     }
 }
 
+plugins{
+    id "com.github.ben-manes.versions" version("0.45.0")
+}
+
 allprojects {
+    apply from: "${rootProject.projectDir}/repositories.gradle.kts"
     repositories {
         google()
         mavenCentral()
@@ -19,11 +32,23 @@ allprojects {
 }
 
 rootProject.buildDir = '../build'
+
+ext {
+    androidPlugin = "com.android.tools.build:gradle:7.4.2"
+    kotlinVersion = "1.8.10"
+}
+
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
     project.evaluationDependsOn(':app')
+}
+
+subprojects {
+    tasks.whenTaskAdded {
+        if (name.contains("uploadCrashlyticsMappingFile")) enabled = false
+    }
 }
 
 tasks.register("clean", Delete) {
