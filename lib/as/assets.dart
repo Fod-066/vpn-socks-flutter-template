@@ -45,6 +45,10 @@ class Assets {
   /// assets/imgs/img_np_point.png
   static const String assetsImgsImgNpPoint = "assets/imgs/img_np_point.png";
 
+  /// Assets for assetsImgsImgPb
+  /// assets/imgs/img_pb.png
+  static const String assetsImgsImgPb = "assets/imgs/img_pb.png";
+
   /// Assets for assetsImgsImgProfileBg
   /// assets/imgs/img_profile_bg.png
   static const String assetsImgsImgProfileBg = "assets/imgs/img_profile_bg.png";
