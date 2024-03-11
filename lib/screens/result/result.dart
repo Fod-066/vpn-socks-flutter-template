@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sweet_vpn/as/assets.dart';
 import 'package:sweet_vpn/ext/number.dart';
+import 'package:sweet_vpn/screens/home/widget/widget.dart';
 import 'package:sweet_vpn/vpn/vpn.dart';
 import 'package:sweet_vpn/widget/app_back.dart';
 import 'package:sweet_vpn/widget/style.dart';
@@ -108,26 +109,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
           ),
           const SizedBox(height: 16),
         ],
-        Container(
-          width: MediaQuery.of(context).size.width * 0.89,
-          height: 66,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Image.asset(Assets.assetsImgsIconNumber, width: 46, height: 46),
-              const SizedBox(width: 4),
-              const Text('Today\'s lucky numbers', style: peaceSans),
-              const Spacer(),
-              Image.asset(Assets.assetsImgsIconNext, width: 34, height: 34),
-            ],
-          ),
-        )
+        const TodayLucky(),
       ],
     ));
   }
