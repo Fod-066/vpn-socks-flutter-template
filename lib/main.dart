@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sweet_vpn/channel/channel.dart';
-import 'package:sweet_vpn/vpn/pod.dart';
-import 'package:sweet_vpn/vpn/vpn_status.dart';
+import 'package:sweet_vpn/screens/screens.dart';
+import 'package:sweet_vpn/vpn/vpn.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -24,6 +24,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     super.initState();
+    ref.read(vpnConnectTimeProvider.notifier).init();
     _streamSubscription = vpnStatusEventChannel.receiveBroadcastStream().listen(
       (event) {
         print('received event $event');
@@ -35,6 +36,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     _profileSubscription = profileEventChannel.receiveBroadcastStream().listen(
       (event) {
         print('received profile $event');
+        ref.read(vpnProfileProvider.notifier).change(event);
       },
       onError: (error) {},
       cancelOnError: false,
@@ -44,6 +46,9 @@ class _MyAppState extends ConsumerState<MyApp> {
   Future<void> _dealEvent(dynamic event) async {
     var vpnStatus = _parseEvent(event);
     ref.read(vpnStatusPod.notifier).change(vpnStatus);
+    if (vpnStatus == VpnStatus.connected || vpnStatus == VpnStatus.stopped) {
+      ref.read(vpnConnectTimeProvider.notifier).toggle(vpnStatus == VpnStatus.connected);
+    }
   }
 
   VpnStatus _parseEvent(dynamic event) {
@@ -58,31 +63,9 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sweet Vpn',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(ref.watch(vpnStatusPod).name),
-              ElevatedButton(
-                onPressed: () {
-                  nativeMethod.invokeMethod('toggle');
-                },
-                child: const Text(
-                  'toggle',
-                  style: TextStyle(fontFamily: 'PeaceSans'),
-                ),
-              ),
-            ],
-          ),
-        ),
+    return ProviderScope(
+      child: MaterialApp.router(
+        routerConfig: screens,
       ),
     );
   }
