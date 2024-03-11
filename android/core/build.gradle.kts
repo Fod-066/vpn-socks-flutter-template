@@ -21,7 +21,7 @@ configure<com.github.megatronking.stringfog.plugin.StringFogExtension> {
 setupCore()
 
 android {
-    namespace = "com.access.vpn.core"
+    namespace = "com.sweet.vpn.core"
 
     defaultConfig {
         consumerProguardFiles("proguard-rules.pro")

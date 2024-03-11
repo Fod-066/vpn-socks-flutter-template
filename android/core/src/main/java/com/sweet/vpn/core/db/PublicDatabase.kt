@@ -18,14 +18,14 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.db
+package com.sweet.vpn.core.db
 
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.access.vpn.core.Core
-import com.access.vpn.core.db.migration.RecreateSchemaMigration
-import com.access.vpn.core.utils.Key
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.db.migration.RecreateSchemaMigration
+import com.sweet.vpn.core.utils.Key
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

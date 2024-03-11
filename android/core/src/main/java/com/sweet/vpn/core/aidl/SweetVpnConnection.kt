@@ -27,7 +27,7 @@ import android.content.ServiceConnection
 import android.os.IBinder
 import android.os.RemoteException
 import com.sweet.vpn.core.background.BaseService
-import com.sweet.vpn.core.background.AccessVpnService
+import com.sweet.vpn.core.background.SweetVpnService
 import com.sweet.vpn.core.preference.DataStore
 import com.sweet.vpn.core.utils.Action
 import com.sweet.vpn.core.utils.Key
@@ -38,11 +38,11 @@ import kotlinx.coroutines.launch
 /**
  * This object should be compact as it will not get GC-ed.
  */
-class AccessVpnConnection(private var listenForDeath: Boolean = false) : ServiceConnection, IBinder.DeathRecipient {
+class SweetVpnConnection(private var listenForDeath: Boolean = false) : ServiceConnection, IBinder.DeathRecipient {
     companion object {
         val serviceClass get() = when (DataStore.serviceMode) {
-            Key.modeProxy -> AccessVpnService::class
-            Key.modeVpn -> AccessVpnService::class
+            Key.modeProxy -> SweetVpnService::class
+            Key.modeVpn -> SweetVpnService::class
             else -> throw UnknownError()
         }.java
     }
@@ -52,7 +52,7 @@ class AccessVpnConnection(private var listenForDeath: Boolean = false) : Service
         fun trafficUpdated(profileId: Long, stats: TrafficStats) { }
         fun trafficPersisted(profileId: Long) { }
 
-        fun onServiceConnected(service: IAccessVpnService)
+        fun onServiceConnected(service: ISweetVpnService)
         /**
          * Different from Android framework, this method will be called even when you call `detachService`.
          */
@@ -63,7 +63,7 @@ class AccessVpnConnection(private var listenForDeath: Boolean = false) : Service
     private var connectionActive = false
     private var callbackRegistered = false
     private var callback: Callback? = null
-    private val serviceCallback = object : IAccessVpnServiceCallback.Stub() {
+    private val serviceCallback = object : ISweetVpnServiceCallback.Stub() {
         override fun stateChanged(state: Int, profileName: String?, msg: String?) {
             val callback = callback ?: return
             GlobalScope.launch(Dispatchers.Main.immediate) {
@@ -89,11 +89,11 @@ class AccessVpnConnection(private var listenForDeath: Boolean = false) : Service
             } catch (_: RemoteException) { }
             field = value
         }
-    var service: IAccessVpnService? = null
+    var service: ISweetVpnService? = null
 
     override fun onServiceConnected(name: ComponentName?, binder: IBinder) {
         this.binder = binder
-        val service = IAccessVpnService.Stub.asInterface(binder)!!
+        val service = ISweetVpnService.Stub.asInterface(binder)!!
         this.service = service
         try {
             if (listenForDeath) binder.linkToDeath(this, 0)

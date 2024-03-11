@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.utils
+package com.sweet.vpn.core.utils
 
 import android.app.Activity
 import android.content.Context
@@ -26,8 +26,8 @@ import android.content.Intent
 import android.net.VpnService
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import com.access.vpn.core.Core
-import com.access.vpn.core.preference.DataStore
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.preference.DataStore
 import timber.log.Timber
 
 private val jsonMimeTypes = arrayOf("application/*", "text/*")

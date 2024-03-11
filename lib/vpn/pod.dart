@@ -1,4 +1,4 @@
-import 'package:access_vpn/vpn/vpn_status.dart';
+import 'package:sweet_vpn/vpn/vpn_status.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class VpnStatusNotifier extends StateNotifier<VpnStatus> {

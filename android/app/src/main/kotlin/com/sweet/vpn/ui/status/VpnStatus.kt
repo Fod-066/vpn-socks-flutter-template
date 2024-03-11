@@ -1,4 +1,4 @@
-package com.access.vpn.ui.status
+package com.sweet.vpn.ui.status
 
 enum class VpnStatus(val state: String) {
   Connected("connected"),

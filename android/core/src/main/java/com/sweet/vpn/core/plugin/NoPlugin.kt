@@ -1,4 +1,4 @@
-package com.access.vpn.core.plugin
+package com.sweet.vpn.core.plugin
 
 object NoPlugin : Plugin() {
     override val id: String get() = ""

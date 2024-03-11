@@ -1,27 +1,27 @@
-package com.access.vpn.ui
+package com.sweet.vpn.ui
 
 import android.content.Intent
 import android.net.Uri
 import android.net.VpnService
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.access.vpn.core.Core
-import com.access.vpn.core.aidl.AccessVpnConnection
-import com.access.vpn.core.aidl.IAccessVpnService
-import com.access.vpn.core.background.BaseService
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.aidl.SweetVpnConnection
+import com.sweet.vpn.core.aidl.ISweetVpnService
+import com.sweet.vpn.core.background.BaseService
 import io.flutter.embedding.android.FlutterActivity
 import timber.log.Timber
-import com.access.vpn.core.background.BaseService.State.*
-import com.access.vpn.core.background.BaseService.State
-import com.access.vpn.core.db.Profile
-import com.access.vpn.core.db.ProfileManager
-import com.access.vpn.ui.channel.CALL_VPN_NATIVE_METHOD
-import com.access.vpn.ui.channel.EVENT_CHANNEL_PROFILE
-import com.access.vpn.ui.channel.EVENT_CHANNEL_VPN_STATUS
-import com.access.vpn.ui.channel.ProfileEventChannelHandler
-import com.access.vpn.ui.channel.VpnStatusEventChannelHandler
-import com.access.vpn.ui.channel.status
-import com.access.vpn.ui.status.VpnStatus
+import com.sweet.vpn.core.background.BaseService.State.*
+import com.sweet.vpn.core.background.BaseService.State
+import com.sweet.vpn.core.db.Profile
+import com.sweet.vpn.core.db.ProfileManager
+import com.sweet.vpn.ui.channel.CALL_VPN_NATIVE_METHOD
+import com.sweet.vpn.ui.channel.EVENT_CHANNEL_PROFILE
+import com.sweet.vpn.ui.channel.EVENT_CHANNEL_VPN_STATUS
+import com.sweet.vpn.ui.channel.ProfileEventChannelHandler
+import com.sweet.vpn.ui.channel.VpnStatusEventChannelHandler
+import com.sweet.vpn.ui.channel.status
+import com.sweet.vpn.ui.status.VpnStatus
 import com.google.gson.Gson
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
@@ -30,9 +30,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
-class MainActivity : FlutterActivity(), AccessVpnConnection.Callback {
+class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
 
-  private val connection = AccessVpnConnection(true)
+  private val connection = SweetVpnConnection(true)
   private var currentVpnState = Idle
   private var currentVpnStatus = VpnStatus.Idle
   private val isInitVpnCalled = AtomicBoolean(false)
@@ -196,7 +196,7 @@ class MainActivity : FlutterActivity(), AccessVpnConnection.Callback {
     connection.connect(this, this)
   }
 
-  override fun onServiceConnected(service: IAccessVpnService) {
+  override fun onServiceConnected(service: ISweetVpnService) {
     val state = try {
       State.values()[service.state]
     } catch (e: Exception) {

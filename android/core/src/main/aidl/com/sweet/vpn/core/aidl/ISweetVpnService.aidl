@@ -1,13 +1,13 @@
 package com.sweet.vpn.core.aidl;
 
-import com.sweet.vpn.core.aidl.IAccessVpnServiceCallback;
+import com.sweet.vpn.core.aidl.ISweetVpnServiceCallback;
 
-interface IAccessVpnService {
+interface ISweetVpnService {
   int getState();
   String getProfileName();
 
-  void registerCallback(in IAccessVpnServiceCallback cb);
-  void startListeningForBandwidth(in IAccessVpnServiceCallback cb, long timeout);
-  oneway void stopListeningForBandwidth(in IAccessVpnServiceCallback cb);
-  oneway void unregisterCallback(in IAccessVpnServiceCallback cb);
+  void registerCallback(in ISweetVpnServiceCallback cb);
+  void startListeningForBandwidth(in ISweetVpnServiceCallback cb, long timeout);
+  oneway void stopListeningForBandwidth(in ISweetVpnServiceCallback cb);
+  oneway void unregisterCallback(in ISweetVpnServiceCallback cb);
 }

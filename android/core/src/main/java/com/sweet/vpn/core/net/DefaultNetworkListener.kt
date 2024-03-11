@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.net
+package com.sweet.vpn.core.net
 
 import android.annotation.TargetApi
 import android.net.ConnectivityManager
@@ -28,7 +28,7 @@ import android.net.NetworkRequest
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import com.access.vpn.core.Core
+import com.sweet.vpn.core.Core
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

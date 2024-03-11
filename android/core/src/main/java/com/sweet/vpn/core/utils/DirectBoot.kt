@@ -1,16 +1,16 @@
-package com.access.vpn.core.utils
+package com.sweet.vpn.core.utils
 
 import android.annotation.TargetApi
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import com.access.vpn.core.Core
-import com.access.vpn.core.Core.app
-import com.access.vpn.core.background.BaseService
-import com.access.vpn.core.db.Profile
-import com.access.vpn.core.db.ProfileManager
-import com.access.vpn.core.preference.DataStore
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.Core.app
+import com.sweet.vpn.core.background.BaseService
+import com.sweet.vpn.core.db.Profile
+import com.sweet.vpn.core.db.ProfileManager
+import com.sweet.vpn.core.preference.DataStore
 import java.io.File
 import java.io.IOException
 import java.io.ObjectInputStream

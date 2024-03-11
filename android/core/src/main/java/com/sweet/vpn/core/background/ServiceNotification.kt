@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.background
+package com.sweet.vpn.core.background
 
 import android.app.PendingIntent
 import android.app.Service
@@ -33,11 +33,11 @@ import android.text.format.Formatter
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.getSystemService
-import com.access.vpn.core.Core
-import com.access.vpn.core.aidl.IAccessVpnServiceCallback
-import com.access.vpn.core.aidl.TrafficStats
-import com.access.vpn.core.R
-import com.access.vpn.core.utils.Action
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.aidl.ISweetVpnServiceCallback
+import com.sweet.vpn.core.aidl.TrafficStats
+import com.sweet.vpn.core.R
+import com.sweet.vpn.core.utils.Action
 
 /**
   * User can customize visibility of notification since Android 8.
@@ -51,8 +51,8 @@ import com.access.vpn.core.utils.Action
  */
 class ServiceNotification(private val service: BaseService.Interface, profileName: String,
                           channel: String, visible: Boolean = false) : BroadcastReceiver() {
-    private val callback: IAccessVpnServiceCallback by lazy {
-        object : IAccessVpnServiceCallback.Stub() {
+    private val callback: ISweetVpnServiceCallback by lazy {
+        object : ISweetVpnServiceCallback.Stub() {
             override fun stateChanged(state: Int, profileName: String?, msg: String?) { }   // ignore
             override fun trafficUpdated(profileId: Long, stats: TrafficStats) {
                 if (profileId != 0L) return
@@ -84,7 +84,7 @@ class ServiceNotification(private val service: BaseService.Interface, profileNam
     init {
         service as Context
         val closeAction = NotificationCompat.Action.Builder(
-          com.access.vpn.plugin.R.drawable.ic_navigation_close,
+          com.sweet.vpn.plugin.R.drawable.ic_navigation_close,
                 "Stop",
                 PendingIntent.getBroadcast(service, 0, Intent(Action.CLOSE).setPackage(service.packageName),
                     PendingIntent.FLAG_IMMUTABLE)).apply {

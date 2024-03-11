@@ -18,10 +18,10 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.preference
+package com.sweet.vpn.core.preference
 
 import androidx.preference.PreferenceDataStore
-import com.access.vpn.core.db.KeyValuePair
+import com.sweet.vpn.core.db.KeyValuePair
 import java.util.HashSet
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")

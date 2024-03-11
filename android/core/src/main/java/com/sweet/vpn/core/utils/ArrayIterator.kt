@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.utils
+package com.sweet.vpn.core.utils
 
 import androidx.recyclerview.widget.SortedList
 

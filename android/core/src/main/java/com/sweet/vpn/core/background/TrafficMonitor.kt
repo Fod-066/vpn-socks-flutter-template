@@ -18,15 +18,15 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.background
+package com.sweet.vpn.core.background
 
 import android.net.LocalSocket
 import android.os.SystemClock
-import com.access.vpn.core.aidl.TrafficStats
-import com.access.vpn.core.db.ProfileManager
-import com.access.vpn.core.net.LocalSocketListener
-import com.access.vpn.core.preference.DataStore
-import com.access.vpn.core.utils.DirectBoot
+import com.sweet.vpn.core.aidl.TrafficStats
+import com.sweet.vpn.core.db.ProfileManager
+import com.sweet.vpn.core.net.LocalSocketListener
+import com.sweet.vpn.core.preference.DataStore
+import com.sweet.vpn.core.utils.DirectBoot
 import java.io.File
 import java.io.IOException
 import java.nio.ByteBuffer

@@ -30,9 +30,9 @@ import com.sweet.vpn.core.Core
 import com.sweet.vpn.core.Core.app
 import com.sweet.vpn.core.preference.DataStore
 
-class AccessVpnReceiver : BroadcastReceiver() {
+class SweetVpnReceiver : BroadcastReceiver() {
     companion object {
-        private val componentName by lazy { ComponentName(app, AccessVpnReceiver::class.java) }
+        private val componentName by lazy { ComponentName(app, SweetVpnReceiver::class.java) }
         var enabled: Boolean
             get() = app.packageManager.getComponentEnabledSetting(componentName) ==
                     PackageManager.COMPONENT_ENABLED_STATE_ENABLED

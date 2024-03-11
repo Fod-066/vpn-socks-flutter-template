@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.sub
+package com.sweet.vpn.core.sub
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -33,17 +33,17 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
-import com.access.vpn.core.Core
-import com.access.vpn.core.db.Profile
-import com.access.vpn.core.db.ProfileManager
-import com.access.vpn.core.preference.DataStore
-import com.access.vpn.core.utils.*
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.db.Profile
+import com.sweet.vpn.core.db.ProfileManager
+import com.sweet.vpn.core.preference.DataStore
+import com.sweet.vpn.core.utils.*
 import com.google.gson.JsonStreamParser
-import com.access.vpn.core.utils.Action
-import com.access.vpn.core.utils.asIterable
-import com.access.vpn.core.utils.broadcastReceiver
-import com.access.vpn.core.utils.readableMessage
-import com.access.vpn.core.utils.useCancellable
+import com.sweet.vpn.core.utils.Action
+import com.sweet.vpn.core.utils.asIterable
+import com.sweet.vpn.core.utils.broadcastReceiver
+import com.sweet.vpn.core.utils.readableMessage
+import com.sweet.vpn.core.utils.useCancellable
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.io.File
@@ -85,7 +85,7 @@ class SubService : Service(), CoroutineScope {
                     color = Color.BLACK
                     priority = NotificationCompat.PRIORITY_LOW
                     addAction(NotificationCompat.Action.Builder(
-                            com.access.vpn.plugin.R.drawable.ic_navigation_close,
+                            com.sweet.vpn.plugin.R.drawable.ic_navigation_close,
                             "Stop",
                             PendingIntent.getBroadcast(this@SubService, 0,
                                     Intent(Action.ABORT).setPackage(packageName), PendingIntent.FLAG_IMMUTABLE)).apply {

@@ -1,4 +1,4 @@
-package com.access.vpn.ui.channel
+package com.sweet.vpn.ui.channel
 
 import io.flutter.plugin.common.EventChannel
 

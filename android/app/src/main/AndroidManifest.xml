@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="access_vpn"
-        android:name=".app.AccessVpnApp"
+        android:label="Sweet Vpn"
+        android:name="com.sweet.vpn.ui.app.App"
         android:icon="@mipmap/ic_launcher">
         <activity
-            android:name="com.access.vpn.ui.MainActivity"
+            android:name="com.sweet.vpn.ui.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"

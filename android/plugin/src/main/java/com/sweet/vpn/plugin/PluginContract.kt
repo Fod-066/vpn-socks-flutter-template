@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.plugin
+package com.sweet.vpn.plugin
 
 /**
  * The contract between the plugin provider and host. Contains definitions for the supported actions, extras, etc.

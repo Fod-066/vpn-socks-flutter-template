@@ -18,14 +18,14 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.db
+package com.sweet.vpn.core.db
 
 import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.util.LongSparseArray
-import com.access.vpn.core.Core
-import com.access.vpn.core.preference.DataStore
-import com.access.vpn.core.utils.DirectBoot
-import com.access.vpn.core.utils.forEachTry
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.preference.DataStore
+import com.sweet.vpn.core.utils.DirectBoot
+import com.sweet.vpn.core.utils.forEachTry
 import com.google.gson.JsonStreamParser
 import org.json.JSONArray
 import timber.log.Timber

@@ -1,6 +1,6 @@
 
 import 'package:flutter/services.dart';
 
-const nativeMethod = MethodChannel('access.vpn.native.method');
-const vpnStatusEventChannel = EventChannel('access.vpn.status.channel');
-const profileEventChannel = EventChannel('access.vpn.profile');
+const nativeMethod = MethodChannel('sweet.vpn.native.method');
+const vpnStatusEventChannel = EventChannel('sweet.vpn.status.channel');
+const profileEventChannel = EventChannel('sweet.vpn.profile');

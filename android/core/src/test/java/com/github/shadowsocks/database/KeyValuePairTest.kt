@@ -20,7 +20,7 @@
 
 package com.github.shadowsocks.database
 
-import com.access.vpn.core.db.KeyValuePair
+import com.sweet.vpn.core.db.KeyValuePair
 import org.junit.Assert
 import org.junit.Test
 

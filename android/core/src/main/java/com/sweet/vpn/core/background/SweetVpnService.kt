@@ -51,7 +51,7 @@ import java.io.IOException
 import java.net.URL
 import android.net.VpnService as BaseVpnService
 
-class AccessVpnService : BaseVpnService(), BaseService.Interface {
+class SweetVpnService : BaseVpnService(), BaseService.Interface {
     companion object {
         private const val VPN_MTU = 1500
         private const val PRIVATE_VLAN4_CLIENT = "172.19.0.1"

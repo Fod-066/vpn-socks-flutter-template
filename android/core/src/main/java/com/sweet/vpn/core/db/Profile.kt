@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.db
+package com.sweet.vpn.core.db
 
 import android.annotation.TargetApi
 import android.net.Uri
@@ -28,11 +28,11 @@ import android.util.LongSparseArray
 import androidx.annotation.Keep
 import androidx.core.net.toUri
 import androidx.room.*
-import com.access.vpn.core.plugin.PluginConfiguration
-import com.access.vpn.plugin.PluginOptions
-import com.access.vpn.core.preference.DataStore
-import com.access.vpn.core.utils.Key
-import com.access.vpn.core.utils.parsePort
+import com.sweet.vpn.core.plugin.PluginConfiguration
+import com.sweet.vpn.plugin.PluginOptions
+import com.sweet.vpn.core.preference.DataStore
+import com.sweet.vpn.core.utils.Key
+import com.sweet.vpn.core.utils.parsePort
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject

@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.aidl
+package com.sweet.vpn.core.aidl
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

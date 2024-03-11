@@ -1,10 +1,10 @@
-package com.access.vpn.core.background
+package com.sweet.vpn.core.background
 
 import android.net.LocalSocket
-import com.access.vpn.core.Core
-import com.access.vpn.core.net.ConcurrentLocalSocketListener
-import com.access.vpn.core.net.DnsResolverCompat
-import com.access.vpn.core.utils.readableMessage
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.net.ConcurrentLocalSocketListener
+import com.sweet.vpn.core.net.DnsResolverCompat
+import com.sweet.vpn.core.utils.readableMessage
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.TimeoutCancellationException

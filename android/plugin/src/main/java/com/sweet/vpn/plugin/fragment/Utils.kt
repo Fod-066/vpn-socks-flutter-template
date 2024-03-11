@@ -20,11 +20,11 @@
 
 @file:JvmName("Utils")
 
-package com.access.vpn.plugin.fragment
+package com.sweet.vpn.plugin.fragment
 
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import com.access.vpn.plugin.Empty
+import com.sweet.vpn.plugin.Empty
 
 typealias Empty = Empty
 

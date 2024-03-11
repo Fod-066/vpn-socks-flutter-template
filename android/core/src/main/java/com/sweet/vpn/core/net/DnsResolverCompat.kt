@@ -18,14 +18,14 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.net
+package com.sweet.vpn.core.net
 
 import android.annotation.TargetApi
 import android.net.DnsResolver
 import android.net.Network
 import android.os.Build
 import android.os.CancellationSignal
-import com.access.vpn.core.Core
+import com.sweet.vpn.core.Core
 import kotlinx.coroutines.*
 import org.xbill.DNS.*
 import java.io.IOException

@@ -18,15 +18,15 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.acl
+package com.sweet.vpn.core.acl
 
 import android.content.Context
 import androidx.recyclerview.widget.SortedList
-import com.access.vpn.core.Core
-import com.access.vpn.core.net.Subnet
-import com.access.vpn.core.utils.BaseSorter
-import com.access.vpn.core.utils.URLSorter
-import com.access.vpn.core.utils.asIterable
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.net.Subnet
+import com.sweet.vpn.core.utils.BaseSorter
+import com.sweet.vpn.core.utils.URLSorter
+import com.sweet.vpn.core.utils.asIterable
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.runBlocking

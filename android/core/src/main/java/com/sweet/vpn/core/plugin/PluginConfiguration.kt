@@ -18,10 +18,10 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.plugin
+package com.sweet.vpn.core.plugin
 
-import com.access.vpn.plugin.PluginOptions
-import com.access.vpn.core.utils.Commandline
+import com.sweet.vpn.plugin.PluginOptions
+import com.sweet.vpn.core.utils.Commandline
 import timber.log.Timber
 import java.util.*
 

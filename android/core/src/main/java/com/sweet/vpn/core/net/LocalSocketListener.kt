@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.net
+package com.sweet.vpn.core.net
 
 import android.annotation.SuppressLint
 import android.net.LocalServerSocket

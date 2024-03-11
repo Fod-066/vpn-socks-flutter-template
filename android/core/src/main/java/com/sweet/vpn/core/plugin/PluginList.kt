@@ -18,13 +18,13 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.plugin
+package com.sweet.vpn.core.plugin
 
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.widget.Toast
-import com.access.vpn.core.Core.app
-import com.access.vpn.plugin.PluginContract
+import com.sweet.vpn.core.Core.app
+import com.sweet.vpn.plugin.PluginContract
 
 class PluginList : ArrayList<Plugin>() {
     init {

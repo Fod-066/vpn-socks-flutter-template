@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.background
+package com.sweet.vpn.core.background
 
 import android.system.ErrnoException
 import android.system.Os

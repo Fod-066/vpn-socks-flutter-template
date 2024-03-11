@@ -18,9 +18,9 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.net
+package com.sweet.vpn.core.net
 
-import com.access.vpn.core.utils.parseNumericAddress
+import com.sweet.vpn.core.utils.parseNumericAddress
 import java.net.InetAddress
 import java.util.*
 

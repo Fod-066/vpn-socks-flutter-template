@@ -18,17 +18,17 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.preference
+package com.sweet.vpn.core.preference
 
 import android.os.Binder
 import androidx.preference.PreferenceDataStore
-import com.access.vpn.core.background.AccessVpnReceiver
-import com.access.vpn.core.Core
-import com.access.vpn.core.db.PrivateDatabase
-import com.access.vpn.core.db.PublicDatabase
-import com.access.vpn.core.utils.DirectBoot
-import com.access.vpn.core.utils.Key
-import com.access.vpn.core.utils.parsePort
+import com.sweet.vpn.core.background.SweetVpnReceiver
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.db.PrivateDatabase
+import com.sweet.vpn.core.db.PublicDatabase
+import com.sweet.vpn.core.utils.DirectBoot
+import com.sweet.vpn.core.utils.Key
+import com.sweet.vpn.core.utils.parsePort
 import java.net.InetSocketAddress
 
 object DataStore : OnPreferenceDataStoreChangeListener {
@@ -60,7 +60,7 @@ object DataStore : OnPreferenceDataStoreChangeListener {
         get() = publicStore.getLong(Key.id) ?: 0
         set(value) = publicStore.putLong(Key.id, value)
     val persistAcrossReboot get() = publicStore.getBoolean(Key.persistAcrossReboot)
-            ?: AccessVpnReceiver.enabled.also { publicStore.putBoolean(Key.persistAcrossReboot, it) }
+            ?: SweetVpnReceiver.enabled.also { publicStore.putBoolean(Key.persistAcrossReboot, it) }
     val canToggleLocked: Boolean get() = publicStore.getBoolean(Key.directBootAware) == true
     val directBootAware: Boolean get() = Core.directBootSupported && canToggleLocked
     val serviceMode get() = publicStore.getString(Key.serviceMode) ?: Key.modeVpn

@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:access_vpn/channel/channel.dart';
-import 'package:access_vpn/vpn/pod.dart';
-import 'package:access_vpn/vpn/vpn_status.dart';
+import 'package:sweet_vpn/channel/channel.dart';
+import 'package:sweet_vpn/vpn/pod.dart';
+import 'package:sweet_vpn/vpn/vpn_status.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

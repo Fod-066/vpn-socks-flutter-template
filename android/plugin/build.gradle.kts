@@ -18,7 +18,7 @@ configure<com.github.megatronking.stringfog.plugin.StringFogExtension> {
 setupCommon()
 
 android {
-    namespace = "com.access.vpn.plugin"
+    namespace = "com.sweet.vpn.plugin"
     lint.informational += "GradleDependency"
 }
 

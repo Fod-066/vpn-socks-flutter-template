@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.background
+package com.sweet.vpn.core.background
 
 import android.app.Service
 import android.content.Context
@@ -29,17 +29,17 @@ import android.os.IBinder
 import android.os.RemoteCallbackList
 import android.os.RemoteException
 import androidx.core.content.ContextCompat
-import com.access.vpn.core.Core
-import com.access.vpn.core.Core.app
-import com.access.vpn.core.acl.Acl
-import com.access.vpn.core.aidl.IAccessVpnService
-import com.access.vpn.core.aidl.IAccessVpnServiceCallback
-import com.access.vpn.core.aidl.TrafficStats
-import com.access.vpn.core.net.DnsResolverCompat
-import com.access.vpn.core.preference.DataStore
-import com.access.vpn.core.utils.Action
-import com.access.vpn.core.utils.broadcastReceiver
-import com.access.vpn.core.utils.readableMessage
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.Core.app
+import com.sweet.vpn.core.acl.Acl
+import com.sweet.vpn.core.aidl.ISweetVpnService
+import com.sweet.vpn.core.aidl.ISweetVpnServiceCallback
+import com.sweet.vpn.core.aidl.TrafficStats
+import com.sweet.vpn.core.net.DnsResolverCompat
+import com.sweet.vpn.core.preference.DataStore
+import com.sweet.vpn.core.utils.Action
+import com.sweet.vpn.core.utils.broadcastReceiver
+import com.sweet.vpn.core.utils.readableMessage
 //import com.google.firebase.analytics.FirebaseAnalytics
 //import com.google.firebase.analytics.ktx.analytics
 //import com.google.firebase.analytics.ktx.logEvent
@@ -99,9 +99,9 @@ object BaseService {
         }
     }
 
-    class Binder(private var data: Data? = null) : IAccessVpnService.Stub(), CoroutineScope, AutoCloseable {
-        private val callbacks = object : RemoteCallbackList<IAccessVpnServiceCallback>() {
-            override fun onCallbackDied(callback: IAccessVpnServiceCallback?, cookie: Any?) {
+    class Binder(private var data: Data? = null) : ISweetVpnService.Stub(), CoroutineScope, AutoCloseable {
+        private val callbacks = object : RemoteCallbackList<ISweetVpnServiceCallback>() {
+            override fun onCallbackDied(callback: ISweetVpnServiceCallback?, cookie: Any?) {
                 super.onCallbackDied(callback, cookie)
                 stopListeningForBandwidth(callback ?: return)
             }
@@ -113,11 +113,11 @@ object BaseService {
         override fun getState(): Int = (data?.state ?: State.Idle).ordinal
         override fun getProfileName(): String = data?.proxy?.profile?.name ?: "Idle"
 
-        override fun registerCallback(cb: IAccessVpnServiceCallback) {
+        override fun registerCallback(cb: ISweetVpnServiceCallback) {
             callbacks.register(cb)
         }
 
-        private fun broadcast(work: (IAccessVpnServiceCallback) -> Unit) {
+        private fun broadcast(work: (ISweetVpnServiceCallback) -> Unit) {
             val count = callbacks.beginBroadcast()
             try {
                 repeat(count) {
@@ -153,7 +153,7 @@ object BaseService {
             }
         }
 
-        override fun startListeningForBandwidth(cb: IAccessVpnServiceCallback, timeout: Long) {
+        override fun startListeningForBandwidth(cb: ISweetVpnServiceCallback, timeout: Long) {
             launch {
                 if (bandwidthListeners.isEmpty() and (bandwidthListeners.put(cb.asBinder(), timeout) == null)) {
                     check(looper == null)
@@ -181,7 +181,7 @@ object BaseService {
             }
         }
 
-        override fun stopListeningForBandwidth(cb: IAccessVpnServiceCallback) {
+        override fun stopListeningForBandwidth(cb: ISweetVpnServiceCallback) {
             launch {
                 if (bandwidthListeners.remove(cb.asBinder()) != null && bandwidthListeners.isEmpty()) {
                     looper!!.cancel()
@@ -190,7 +190,7 @@ object BaseService {
             }
         }
 
-        override fun unregisterCallback(cb: IAccessVpnServiceCallback) {
+        override fun unregisterCallback(cb: ISweetVpnServiceCallback) {
             stopListeningForBandwidth(cb)   // saves an RPC, and safer
             callbacks.unregister(cb)
         }
@@ -298,7 +298,7 @@ object BaseService {
 
                 // stop the service if nothing has bound to it
                 if (restart) startRunner() else {
-                    AccessVpnReceiver.enabled = false
+                    SweetVpnReceiver.enabled = false
                     stopSelf()
                 }
             }
@@ -332,7 +332,7 @@ object BaseService {
                 return Service.START_NOT_STICKY
             }
 
-            AccessVpnReceiver.enabled = DataStore.persistAcrossReboot
+            SweetVpnReceiver.enabled = DataStore.persistAcrossReboot
             if (!data.closeReceiverRegistered) {
                 ContextCompat.registerReceiver(this, data.closeReceiver, IntentFilter().apply {
                     addAction(Action.RELOAD)

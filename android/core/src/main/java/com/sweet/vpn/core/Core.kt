@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core
+package com.sweet.vpn.core
 
 import android.app.*
 import android.app.admin.DevicePolicyManager
@@ -35,17 +35,16 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.os.persistableBundleOf
 import androidx.work.Configuration
-import com.access.vpn.core.acl.Acl
-import com.access.vpn.core.aidl.AccessVpnConnection
-import com.access.vpn.core.BuildConfig
-import com.access.vpn.core.db.Profile
-import com.access.vpn.core.db.ProfileManager
-import com.access.vpn.core.preference.DataStore
-import com.access.vpn.core.sub.SubService
-import com.access.vpn.core.utils.Action
-import com.access.vpn.core.utils.DeviceStorageApp
-import com.access.vpn.core.utils.DirectBoot
-import com.access.vpn.core.utils.Key
+import com.sweet.vpn.core.acl.Acl
+import com.sweet.vpn.core.aidl.SweetVpnConnection
+import com.sweet.vpn.core.db.Profile
+import com.sweet.vpn.core.db.ProfileManager
+import com.sweet.vpn.core.preference.DataStore
+import com.sweet.vpn.core.sub.SubService
+import com.sweet.vpn.core.utils.Action
+import com.sweet.vpn.core.utils.DeviceStorageApp
+import com.sweet.vpn.core.utils.DirectBoot
+import com.sweet.vpn.core.utils.Key
 //import com.google.firebase.crashlytics.FirebaseCrashlytics
 //import com.google.firebase.ktx.Firebase
 //import com.google.firebase.ktx.initialize
@@ -179,7 +178,7 @@ object Core : Configuration.Provider {
         false
     }
 
-    fun startService() = ContextCompat.startForegroundService(app, Intent(app, AccessVpnConnection.serviceClass))
+    fun startService() = ContextCompat.startForegroundService(app, Intent(app, SweetVpnConnection.serviceClass))
     fun reloadService() = app.sendBroadcast(Intent(Action.RELOAD).setPackage(app.packageName))
     fun stopService() = app.sendBroadcast(Intent(Action.CLOSE).setPackage(app.packageName))
 }

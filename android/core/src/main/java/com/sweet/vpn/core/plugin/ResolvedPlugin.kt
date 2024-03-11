@@ -18,17 +18,17 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.plugin
+package com.sweet.vpn.core.plugin
 
 import android.content.pm.ComponentInfo
 import android.content.pm.ResolveInfo
 import android.graphics.drawable.Drawable
 import android.os.Build
-import com.access.vpn.core.Core
-import com.access.vpn.core.Core.app
-import com.access.vpn.core.plugin.PluginManager.loadString
-import com.access.vpn.core.utils.signaturesCompat
-import com.access.vpn.plugin.PluginContract
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.Core.app
+import com.sweet.vpn.core.plugin.PluginManager.loadString
+import com.sweet.vpn.core.utils.signaturesCompat
+import com.sweet.vpn.plugin.PluginContract
 
 abstract class ResolvedPlugin(protected val resolveInfo: ResolveInfo) : Plugin() {
     protected abstract val componentInfo: ComponentInfo

@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.preference
+package com.sweet.vpn.core.preference
 
 import android.graphics.Typeface
 import android.text.InputFilter

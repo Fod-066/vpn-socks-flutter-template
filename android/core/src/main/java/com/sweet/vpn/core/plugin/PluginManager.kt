@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.plugin
+package com.sweet.vpn.core.plugin
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
@@ -35,13 +35,13 @@ import android.system.Os
 import android.util.Base64
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import com.access.vpn.core.Core
-import com.access.vpn.core.Core.app
-import com.access.vpn.core.background.BaseService
-import com.access.vpn.core.utils.listenForPackageChanges
-import com.access.vpn.core.utils.signaturesCompat
-import com.access.vpn.plugin.PluginContract
-import com.access.vpn.plugin.PluginOptions
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.Core.app
+import com.sweet.vpn.core.background.BaseService
+import com.sweet.vpn.core.utils.listenForPackageChanges
+import com.sweet.vpn.core.utils.signaturesCompat
+import com.sweet.vpn.plugin.PluginContract
+import com.sweet.vpn.plugin.PluginOptions
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException

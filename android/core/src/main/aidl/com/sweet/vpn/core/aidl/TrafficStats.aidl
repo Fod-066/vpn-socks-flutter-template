@@ -1,3 +1,3 @@
-package com.access.vpn.core.aidl;
+package com.sweet.vpn.core.aidl;
 
 parcelable TrafficStats;

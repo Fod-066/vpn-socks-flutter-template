@@ -18,14 +18,14 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.acl
+package com.sweet.vpn.core.acl
 
 import android.content.Context
 import android.os.Build
 import androidx.work.*
-import com.access.vpn.core.Core
-import com.access.vpn.core.Core.app
-import com.access.vpn.core.utils.useCancellable
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.Core.app
+import com.sweet.vpn.core.utils.useCancellable
 import timber.log.Timber
 import java.io.IOException
 import java.net.HttpURLConnection

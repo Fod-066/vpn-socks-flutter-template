@@ -18,16 +18,16 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.background
+package com.sweet.vpn.core.background
 
 import android.content.Context
 import android.util.Base64
-import com.access.vpn.core.acl.Acl
-import com.access.vpn.core.acl.AclSyncer
-import com.access.vpn.core.db.Profile
-import com.access.vpn.core.plugin.PluginConfiguration
-import com.access.vpn.core.plugin.PluginManager
-import com.access.vpn.core.preference.DataStore
+import com.sweet.vpn.core.acl.Acl
+import com.sweet.vpn.core.acl.AclSyncer
+import com.sweet.vpn.core.db.Profile
+import com.sweet.vpn.core.plugin.PluginConfiguration
+import com.sweet.vpn.core.plugin.PluginManager
+import com.sweet.vpn.core.preference.DataStore
 import kotlinx.coroutines.CoroutineScope
 import org.json.JSONArray
 import org.json.JSONObject

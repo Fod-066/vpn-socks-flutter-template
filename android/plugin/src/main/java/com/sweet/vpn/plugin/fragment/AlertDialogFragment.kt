@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.plugin.fragment
+package com.sweet.vpn.plugin.fragment
 
 import android.app.Activity
 import android.content.DialogInterface
