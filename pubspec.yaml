@@ -30,3 +30,8 @@ flutter:
     - family: PeaceSans
       fonts:
         - asset: assets/fonts/peace_sans.ttf
+
+flutter_assets:
+  assets_path: assets/
+  output_path: lib/as/
+  filename: assets.dart
