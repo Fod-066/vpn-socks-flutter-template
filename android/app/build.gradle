@@ -2,23 +2,14 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
-//    id "stringfog"
+    id "stringfog"
 }
-
-//// 导入RandomKeyGenerator类，如果使用HardCodeKeyGenerator，更换下类名
-//import com.github.megatronking.stringfog.plugin.kg.RandomKeyGenerator
-//import com.github.megatronking.stringfog.plugin.StringFogMode
 //
-//stringfog {
-//    // 必要：加解密库的实现类路径，需和上面配置的加解密算法库一致。
-//    implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'
-//    // 可选：StringFog会自动尝试获取packageName，如果遇到获取失败的情况，可以显式地指定。
-//    packageName 'com.github.megatronking.stringfog.app'
-//    // 可选：加密开关，默认开启。
-//    enable true
-//    kg new RandomKeyGenerator()
-//    mode StringFogMode.base64
-//}
+stringfog {
+    implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'
+    enable true
+    kg new com.github.megatronking.stringfog.plugin.kg.RandomKeyGenerator()
+}
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
