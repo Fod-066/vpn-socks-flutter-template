@@ -1,6 +1,6 @@
-package com.access.vpn.core.aidl;
+package com.sweet.vpn.core.aidl;
 
-import com.access.vpn.core.aidl.TrafficStats;
+import com.sweet.vpn.core.aidl.TrafficStats;
 
 oneway interface IAccessVpnServiceCallback {
   void stateChanged(int state, String profileName, String msg);

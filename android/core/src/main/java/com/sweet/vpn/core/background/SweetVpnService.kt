@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.access.vpn.core.background
+package com.sweet.vpn.core.background
 
 import android.app.Service
 import android.content.Intent
@@ -31,16 +31,16 @@ import android.os.ParcelFileDescriptor
 import android.system.ErrnoException
 import android.system.Os
 import android.system.OsConstants
-import com.access.vpn.core.Core
-import com.access.vpn.core.acl.Acl
-import com.access.vpn.core.R
-import com.access.vpn.core.net.ConcurrentLocalSocketListener
-import com.access.vpn.core.net.DefaultNetworkListener
-import com.access.vpn.core.net.DnsResolverCompat
-import com.access.vpn.core.net.Subnet
-import com.access.vpn.core.preference.DataStore
-import com.access.vpn.core.utils.Key
-import com.access.vpn.core.utils.int
+import com.sweet.vpn.core.Core
+import com.sweet.vpn.core.acl.Acl
+import com.sweet.vpn.core.R
+import com.sweet.vpn.core.net.ConcurrentLocalSocketListener
+import com.sweet.vpn.core.net.DefaultNetworkListener
+import com.sweet.vpn.core.net.DnsResolverCompat
+import com.sweet.vpn.core.net.Subnet
+import com.sweet.vpn.core.preference.DataStore
+import com.sweet.vpn.core.utils.Key
+import com.sweet.vpn.core.utils.int
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

@@ -1,6 +1,6 @@
-package com.access.vpn.core.aidl;
+package com.sweet.vpn.core.aidl;
 
-import com.access.vpn.core.aidl.IAccessVpnServiceCallback;
+import com.sweet.vpn.core.aidl.IAccessVpnServiceCallback;
 
 interface IAccessVpnService {
   int getState();

@@ -224,7 +224,7 @@ class MainActivity : FlutterActivity(), AccessVpnConnection.Callback {
   }
 
   private fun log(msg: String) {
-    Timber.tag("AccessVpn").d(msg)
+    Timber.tag("SweetVpn").d(msg)
   }
 
   private fun openGp() {
