@@ -15,7 +15,7 @@ rust-version = "1.64"
 maintenance = { status = "passively-maintained" }
 
 [[bin]]
-name = "accessvpnss"
+name = "svcore"
 path = "bin/sslocal.rs"
 required-features = ["local"]
 

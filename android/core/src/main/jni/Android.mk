@@ -161,7 +161,7 @@ TUN2SOCKS_SOURCES := \
         tun2socks/SocksUdpGwClient.c \
         udpgw_client/UdpGwClient.c
 
-LOCAL_MODULE := accessvpnt2s
+LOCAL_MODULE := svsub
 
 LOCAL_LDLIBS := -ldl -llog
 

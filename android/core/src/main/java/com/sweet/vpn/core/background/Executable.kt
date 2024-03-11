@@ -30,8 +30,8 @@ import java.io.IOException
 
 object Executable {
 //    const val REDSOCKS = "libredsocks.so"
-    const val SS_LOCAL = "libaccessvpnss.so"
-    const val TUN2SOCKS = "libaccessvpnt2s.so"
+    const val SS_LOCAL = "libsvcore.so"
+    const val TUN2SOCKS = "libsvsub.so"
 
     private val EXECUTABLES = setOf(SS_LOCAL, /*REDSOCKS,*/ TUN2SOCKS)
 

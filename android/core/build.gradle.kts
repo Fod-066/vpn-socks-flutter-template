@@ -46,7 +46,7 @@ android {
 
 cargo {
     module = "src/main/rust/shadowsocks-rust"
-    libname = "accessvpnss"
+    libname = "svcore"
     targets = listOf("arm", "arm64",/* "x86", "x86_64"*/)
     profile = findProperty("CARGO_PROFILE")?.toString() ?: currentFlavor
     extraCargoBuildArguments = listOf("--bin", libname!!)
