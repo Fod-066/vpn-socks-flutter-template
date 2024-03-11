@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sweet_vpn/screens/home/widget/widget.dart';
+import 'package:sweet_vpn/screens/screens.dart';
 import 'package:sweet_vpn/widget/app_back.dart';
 import 'package:sweet_vpn/widget/style.dart';
 
@@ -31,7 +33,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   style: peaceSans.copyWith(color: const Color(0xffACE0FD)),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () => context.push(setting),
                   icon: const Icon(Icons.settings),
                 ),
               ],
