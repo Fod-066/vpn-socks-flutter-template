@@ -1,13 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sweet_vpn/channel/channel.dart';
 import 'package:sweet_vpn/vpn/pod.dart';
 import 'package:sweet_vpn/vpn/vpn_status.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
-  runApp(const ProviderScope(child:  MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatefulHookConsumerWidget {
@@ -59,7 +59,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Access Vpn',
+      title: 'Sweet Vpn',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -75,7 +75,10 @@ class _MyAppState extends ConsumerState<MyApp> {
                 onPressed: () {
                   nativeMethod.invokeMethod('toggle');
                 },
-                child: const Text('toggle'),
+                child: const Text(
+                  'toggle',
+                  style: TextStyle(fontFamily: 'PeaceSans'),
+                ),
               ),
             ],
           ),

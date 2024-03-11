@@ -1,11 +1,11 @@
 name: sweet_vpn
 description: A new Flutter project.
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.2 <4.0.0'
+  sdk: ">=3.1.2 <4.0.0"
 
 dependencies:
   flutter:
@@ -23,3 +23,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/fonts/peace_sans.ttf
+    - assets/imgs/
+  fonts:
+    - family: PeaceSans
+      fonts:
+        - asset: assets/fonts/peace_sans.ttf
