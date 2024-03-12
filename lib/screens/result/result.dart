@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sweet_vpn/as/assets.dart';
+import 'package:sweet_vpn/channel/channel.dart';
 import 'package:sweet_vpn/ext/number.dart';
 import 'package:sweet_vpn/screens/home/widget/widget.dart';
+import 'package:sweet_vpn/screens/screens.dart';
 import 'package:sweet_vpn/vpn/vpn.dart';
 import 'package:sweet_vpn/widget/app_back.dart';
+import 'package:sweet_vpn/widget/single_tapper.dart';
 import 'package:sweet_vpn/widget/style.dart';
 
 class ResultScreen extends StatefulHookConsumerWidget {
@@ -72,39 +75,54 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
           ),
         ),
         if (!vpnStatus.isConnetced)
-          Container(
-            height: 46,
-            margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 32),
-            decoration: BoxDecoration(
-              color: const Color(0xffFE8F47),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            alignment: Alignment.center,
-            child: const Text(
-              'Connect again',
-              style: peaceSans,
+          SingleTapper(
+            onTap: () {
+              nativeMethod.invokeMethod('switch', null);
+              context.pop();
+            },
+            child: Container(
+              height: 46,
+              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 32),
+              decoration: BoxDecoration(
+                color: const Color(0xffFE8F47),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              alignment: Alignment.center,
+              child: const Text(
+                'Connect again',
+                style: peaceSans,
+              ),
             ),
           ),
         if (vpnStatus.isConnetced) ...[
           const SizedBox(height: 48),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.89,
-            height: 66,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Image.asset(Assets.assetsImgsImgNode, width: 46, height: 46),
-                const SizedBox(width: 4),
-                const Text('Change nodes', style: peaceSans),
-                const Spacer(),
-                Image.asset(Assets.assetsImgsIconNext, width: 34, height: 34),
-              ],
+          SingleTapper(
+            onTap: () async {
+              var isPop = await context.push(servers);
+              if (isPop == true) {
+                // ignore: use_build_context_synchronously
+                context.pop();
+              }
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.89,
+              height: 66,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Image.asset(Assets.assetsImgsImgNode, width: 46, height: 46),
+                  const SizedBox(width: 4),
+                  const Text('Change nodes', style: peaceSans),
+                  const Spacer(),
+                  Image.asset(Assets.assetsImgsIconNext, width: 34, height: 34),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 16),

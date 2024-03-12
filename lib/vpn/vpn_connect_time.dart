@@ -5,10 +5,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class VpnConnectTimeNotifier extends StateNotifier<int> {
   VpnConnectTimeNotifier() : super(0);
 
-  late Timer timer;
+  Timer? timer;
   bool _isConnected = false;
 
   void init() {
+    if (timer != null) return;
     timer = Timer.periodic(
       const Duration(seconds: 1),
       (timer) {

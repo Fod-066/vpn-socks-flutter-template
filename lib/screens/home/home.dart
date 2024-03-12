@@ -49,14 +49,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Future<void> _dealEvent(dynamic event) async {
     var vpnStatus = _parseEvent(event);
-    ref.read(vpnStatusPod.notifier).change(vpnStatus);
-    if (vpnStatus == VpnStatus.connected || vpnStatus == VpnStatus.stopped) {
-      ref.read(vpnConnectTimeProvider.notifier).toggle(vpnStatus == VpnStatus.connected);
+    if (lastVpnStatus != vpnStatus) {
+      print('received deal event $event');
+      ref.read(vpnStatusPod.notifier).change(vpnStatus);
+      if (vpnStatus == VpnStatus.connected || vpnStatus == VpnStatus.stopped) {
+        ref.read(vpnConnectTimeProvider.notifier).toggle(vpnStatus == VpnStatus.connected);
+      }
+      if (vpnStatus.isExecuting) {
+        context.push(executing);
+      }
+      lastVpnStatus = vpnStatus;
     }
-    if (vpnStatus.isExecuting && lastVpnStatus != vpnStatus) {
-      context.push(executing);
-    }
-    lastVpnStatus = vpnStatus;
   }
 
   VpnStatus _parseEvent(dynamic event) {

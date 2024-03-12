@@ -64,25 +64,31 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
         "toggle" -> {
           toggle()
         }
+
         "getAllProfiles" -> {
           result.success(getAllProfiles())
         }
+
         "switch" -> {
-          (call.arguments as Long?)?.let {
-            switch(it)
-          } ?: {
+          (call.arguments as Int?)?.let {
+            switch(it.toLong())
+          } ?: kotlin.run{
             switch(profiles.random().id)
           }
         }
+
         "openGp" -> {
           openGp()
         }
+
         "openBrowser" -> {
           openBrowser()
         }
+
         "start" -> {
           startVpn()
         }
+
         "stop" -> {
           stopVpn()
         }
@@ -113,7 +119,37 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
         method = "chacha20-ietf-poly1305"
       )
     )
+    val p1 = ProfileManager.createProfile(
+      Profile(
+        name = "Phoenix",
+        host = "51.79.69.99",
+        remotePort = 5131,
+        password = "mEaySpF1IKrfzZge",
+        method = "chacha20-ietf-poly1305"
+      )
+    )
+    val p2 = ProfileManager.createProfile(
+      Profile(
+        name = "Dover",
+        host = "51.79.69.99",
+        remotePort = 5131,
+        password = "mEaySpF1IKrfzZge",
+        method = "chacha20-ietf-poly1305"
+      )
+    )
+    val p3 = ProfileManager.createProfile(
+      Profile(
+        name = "Reno",
+        host = "51.79.69.99",
+        remotePort = 5131,
+        password = "mEaySpF1IKrfzZge",
+        method = "chacha20-ietf-poly1305"
+      )
+    )
     profiles.add(p)
+    profiles.add(p1)
+    profiles.add(p2)
+    profiles.add(p3)
     Core.switchProfile(p.id)
     log("vpn init finish")
     isInitVpnCalled.set(true)
@@ -141,6 +177,10 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
     lifecycleScope.launch {
       vpnStatusECHandler.send(if (isSwitchProfile) VpnStatus.Switching.state else VpnStatus.Connecting.state)
       lastConnectionIsSwitching = isSwitchProfile
+      if (isSwitchProfile) {
+        currentVpnStatus = VpnStatus.Switching
+        Core.stopService()
+      }
       delay(2000L)
       Core.startService()
     }
@@ -156,6 +196,7 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
   }
 
   private fun switch(id: Long) {
+    log("switch vpn $id")
     Core.switchProfile(id)
     startVpn(true)
   }
@@ -195,14 +236,16 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
   }
 
   override fun stateChanged(state: BaseService.State, profileName: String?, msg: String?) {
-    log("VPN,stageChanged:$state")
+    log("VPN,stageChanged:$state $currentVpnStatus")
     currentVpnState = state
-    if (currentVpnStatus == VpnStatus.Switching && (currentVpnState == Stopping || currentVpnState == Stopped)) {
+    if (currentVpnStatus == VpnStatus.Switching && (currentVpnState == Stopping || currentVpnState == Stopped || currentVpnState == Connecting)) {
+
       return
     }
     currentVpnStatus = currentVpnState.status()
     vpnStatusECHandler.send(currentVpnStatus.state)
     profileECHandler.send(if (currentVpnState == Connected) Gson().toJson(Core.currentProfile?.main) else null)
+    log("VPN,send:$currentVpnStatus ${Core.currentProfile?.main?.name}")
   }
 
   override fun onBinderDied() {

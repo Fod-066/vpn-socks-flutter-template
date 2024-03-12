@@ -4,6 +4,7 @@ import 'package:sweet_vpn/screens/home/home.dart';
 import 'package:sweet_vpn/screens/luck/luck.dart';
 import 'package:sweet_vpn/screens/result/result.dart';
 import 'package:sweet_vpn/screens/setting/setting.dart';
+import 'package:sweet_vpn/screens/sever/servers.dart';
 import 'package:sweet_vpn/screens/start/start.dart';
 
 const String start = '/start';
@@ -12,6 +13,7 @@ const String setting = '/setting';
 const String executing = '/executing';
 const String result = '/result';
 const String luck = '/luck';
+const String servers = '/servers';
 
 final screens = GoRouter(
   routes: [
@@ -39,6 +41,10 @@ final screens = GoRouter(
       path: luck,
       builder: (context, state) => const LuckScreen(),
     ),
+    GoRoute(
+      path: servers,
+      builder: (context, state) => const ServersScreen(),
+    )
   ],
   initialLocation: start,
 );

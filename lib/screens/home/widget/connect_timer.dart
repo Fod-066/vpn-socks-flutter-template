@@ -15,7 +15,7 @@ class ConnectTimer extends HookConsumerWidget {
         vpnStatus == VpnStatus.stopping;
     var seconds = ref.watch(vpnConnectTimeProvider);
     return Text(
-      seconds.formatDuration(),
+      isUseBlackTextColor ? seconds.formatDuration() : '00:00:00',
       style: peaceSans.copyWith(
         color: isUseBlackTextColor ? Colors.black : const Color(0xffACE0FD),
         fontSize: 20,
