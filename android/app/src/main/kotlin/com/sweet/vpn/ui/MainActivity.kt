@@ -60,18 +60,32 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
       CALL_VPN_NATIVE_METHOD
     ).setMethodCallHandler { call, result ->
       log("flutter call native method:${call.method}")
-      if (call.method == "toggle") {
-        toggle()
-      } else if (call.method == "getAllProfiles") {
-        result.success(getAllProfiles())
-      } else if (call.method == "switch") {
-        (call.arguments as Long?)?.let {
-          switch(it)
+      when (call.method) {
+        "toggle" -> {
+          toggle()
         }
-      } else if (call.method == "openGp") {
-        openGp()
-      } else if (call.method == "openBrowser") {
-        openBrowser()
+        "getAllProfiles" -> {
+          result.success(getAllProfiles())
+        }
+        "switch" -> {
+          (call.arguments as Long?)?.let {
+            switch(it)
+          } ?: {
+            switch(profiles.random().id)
+          }
+        }
+        "openGp" -> {
+          openGp()
+        }
+        "openBrowser" -> {
+          openBrowser()
+        }
+        "start" -> {
+          startVpn()
+        }
+        "stop" -> {
+          stopVpn()
+        }
       }
     }
   }
@@ -88,7 +102,7 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
   private fun initVpn() {
     if (isInitVpnCalled.get()) return
     Core.init(application, MainActivity::class)
-    connection.connect(this,this)
+    connection.connect(this, this)
     ProfileManager.clear()
     val p = ProfileManager.createProfile(
       Profile(
@@ -188,6 +202,7 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
     }
     currentVpnStatus = currentVpnState.status()
     vpnStatusECHandler.send(currentVpnStatus.state)
+    profileECHandler.send(if (currentVpnState == Connected) Gson().toJson(Core.currentProfile?.main) else null)
   }
 
   override fun onBinderDied() {
