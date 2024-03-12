@@ -90,7 +90,7 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
         }
 
         "stop" -> {
-          stopVpn()
+          Core.stopService()
         }
       }
     }
@@ -190,8 +190,8 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
     log("stop vpn")
     lifecycleScope.launch {
       vpnStatusECHandler.send(VpnStatus.Stopping.state)
-      delay(2000L)
-      Core.stopService()
+//      delay(2000L)
+//      Core.stopService()
     }
   }
 

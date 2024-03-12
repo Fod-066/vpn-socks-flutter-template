@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sweet_vpn/as/assets.dart';
+import 'package:sweet_vpn/channel/channel.dart';
 import 'package:sweet_vpn/screens/screens.dart';
 import 'package:sweet_vpn/vpn/vpn.dart';
 import 'package:sweet_vpn/widget/app_back.dart';
@@ -23,6 +24,7 @@ class _ExecuteScreenState extends ConsumerState<ExecuteScreen> with SingleTicker
   @override
   void initState() {
     super.initState();
+    var isConnecting = ref.read(vpnStatusPod).isConnecting;
     _controller = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
@@ -35,6 +37,9 @@ class _ExecuteScreenState extends ConsumerState<ExecuteScreen> with SingleTicker
     _animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         //context.pushReplacement(home);
+        if (!isConnecting) {
+          nativeMethod.invokeMethod('stop');
+        }
         context.pushReplacement(result);
       }
     });
