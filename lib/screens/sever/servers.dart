@@ -1,10 +1,10 @@
+import 'package:drip_vpn/channel/channel.dart';
+import 'package:drip_vpn/screens/sever/server_list.dart';
+import 'package:drip_vpn/widget/app_back.dart';
+import 'package:drip_vpn/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sweet_vpn/channel/channel.dart';
-import 'package:sweet_vpn/screens/sever/server_list.dart';
-import 'package:sweet_vpn/widget/app_back.dart';
-import 'package:sweet_vpn/widget/style.dart';
 
 class ServersScreen extends StatefulHookConsumerWidget {
   const ServersScreen({super.key});

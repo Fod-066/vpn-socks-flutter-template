@@ -24,7 +24,7 @@ import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.sweet.vpn.core.db.PrivateDatabase
+import com.drip.vpn.core.db.PrivateDatabase
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

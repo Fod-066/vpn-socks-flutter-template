@@ -1,11 +1,11 @@
+import 'package:drip_vpn/as/assets.dart';
+import 'package:drip_vpn/screens/luck/luck_pan.dart';
+import 'package:drip_vpn/widget/app_back.dart';
+import 'package:drip_vpn/widget/single_tapper.dart';
+import 'package:drip_vpn/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sweet_vpn/as/assets.dart';
-import 'package:sweet_vpn/screens/luck/luck_pan.dart';
-import 'package:sweet_vpn/widget/app_back.dart';
-import 'package:sweet_vpn/widget/single_tapper.dart';
-import 'package:sweet_vpn/widget/style.dart';
 
 class LuckScreen extends StatefulHookConsumerWidget {
   const LuckScreen({super.key});

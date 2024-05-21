@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.plugin
+package com.drip.vpn.core.plugin
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
@@ -35,13 +35,13 @@ import android.system.Os
 import android.util.Base64
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.Core.app
-import com.sweet.vpn.core.background.BaseService
-import com.sweet.vpn.core.utils.listenForPackageChanges
-import com.sweet.vpn.core.utils.signaturesCompat
-import com.sweet.vpn.plugin.PluginContract
-import com.sweet.vpn.plugin.PluginOptions
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.Core.app
+import com.drip.vpn.core.background.BaseService
+import com.drip.vpn.core.utils.listenForPackageChanges
+import com.drip.vpn.core.utils.signaturesCompat
+import com.drip.vpn.plugin.PluginContract
+import com.drip.vpn.plugin.PluginOptions
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -62,7 +62,7 @@ object PluginManager {
      * public key yet since it will also automatically trust packages signed by the same signatures, e.g. debug keys.
      */
     val trustedSignatures by lazy {
-        Core.packageInfo.signaturesCompat.toSet() +
+        com.drip.vpn.core.Core.packageInfo.signaturesCompat.toSet() +
                 Signature(Base64.decode(  // @Mygod
                 """
                     |MIIDWzCCAkOgAwIBAgIEUzfv8DANBgkqhkiG9w0BAQsFADBdMQswCQYDVQQGEwJD
@@ -209,7 +209,7 @@ object PluginManager {
     private fun initNativeSlow(cr: ContentResolver, options: PluginOptions, uri: Uri): String? {
         var initialized = false
         fun entryNotFound(): Nothing = throw IndexOutOfBoundsException("Plugin entry binary not found")
-        val pluginDir = File(Core.deviceStorage.noBackupFilesDir, "plugin")
+        val pluginDir = File(com.drip.vpn.core.Core.deviceStorage.noBackupFilesDir, "plugin")
         (cr.query(uri, arrayOf(PluginContract.COLUMN_PATH, PluginContract.COLUMN_MODE), null, null, null)
                 ?: return null).use { cursor ->
             if (!cursor.moveToFirst()) entryNotFound()

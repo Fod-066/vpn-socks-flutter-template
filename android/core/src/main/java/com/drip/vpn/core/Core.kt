@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core
+package com.drip.vpn.core
 
 import android.app.*
 import android.app.admin.DevicePolicyManager
@@ -35,16 +35,16 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.os.persistableBundleOf
 import androidx.work.Configuration
-import com.sweet.vpn.core.acl.Acl
-import com.sweet.vpn.core.aidl.SweetVpnConnection
-import com.sweet.vpn.core.db.Profile
-import com.sweet.vpn.core.db.ProfileManager
-import com.sweet.vpn.core.preference.DataStore
-import com.sweet.vpn.core.sub.SubService
-import com.sweet.vpn.core.utils.Action
-import com.sweet.vpn.core.utils.DeviceStorageApp
-import com.sweet.vpn.core.utils.DirectBoot
-import com.sweet.vpn.core.utils.Key
+import com.drip.vpn.core.acl.Acl
+import com.drip.vpn.core.aidl.DripVpnConnection
+import com.drip.vpn.core.db.Profile
+import com.drip.vpn.core.db.ProfileManager
+import com.drip.vpn.core.preference.DataStore
+import com.drip.vpn.core.sub.SubService
+import com.drip.vpn.core.utils.Action
+import com.drip.vpn.core.utils.DeviceStorageApp
+import com.drip.vpn.core.utils.DirectBoot
+import com.drip.vpn.core.utils.Key
 //import com.google.firebase.crashlytics.FirebaseCrashlytics
 //import com.google.firebase.ktx.Firebase
 //import com.google.firebase.ktx.initialize
@@ -61,16 +61,18 @@ object Core : Configuration.Provider {
     lateinit var app: Application
         @VisibleForTesting set
     lateinit var configureIntent: (Context) -> PendingIntent
-    val activity by lazy { app.getSystemService<ActivityManager>()!! }
-    val clipboard by lazy { app.getSystemService<ClipboardManager>()!! }
-    val connectivity by lazy { app.getSystemService<ConnectivityManager>()!! }
-    val notification by lazy { app.getSystemService<NotificationManager>()!! }
-    val user by lazy { app.getSystemService<UserManager>()!! }
-    val packageInfo: PackageInfo by lazy { getPackageInfo(app.packageName) }
-    val deviceStorage by lazy { if (Build.VERSION.SDK_INT < 24) app else DeviceStorageApp(app) }
+    val activity by lazy { com.drip.vpn.core.Core.app.getSystemService<ActivityManager>()!! }
+    val clipboard by lazy { com.drip.vpn.core.Core.app.getSystemService<ClipboardManager>()!! }
+    val connectivity by lazy { com.drip.vpn.core.Core.app.getSystemService<ConnectivityManager>()!! }
+    val notification by lazy { com.drip.vpn.core.Core.app.getSystemService<NotificationManager>()!! }
+    val user by lazy { com.drip.vpn.core.Core.app.getSystemService<UserManager>()!! }
+    val packageInfo: PackageInfo by lazy { com.drip.vpn.core.Core.getPackageInfo(com.drip.vpn.core.Core.app.packageName) }
+    val deviceStorage by lazy { if (Build.VERSION.SDK_INT < 24) com.drip.vpn.core.Core.app else DeviceStorageApp(
+      com.drip.vpn.core.Core.app
+    ) }
     val directBootSupported by lazy {
         Build.VERSION.SDK_INT >= 24 && try {
-            app.getSystemService<DevicePolicyManager>()?.storageEncryptionStatus ==
+            com.drip.vpn.core.Core.app.getSystemService<DevicePolicyManager>()?.storageEncryptionStatus ==
                     DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE_PER_USER
         } catch (_: RuntimeException) {
             false
@@ -92,14 +94,14 @@ object Core : Configuration.Provider {
     }
 
     fun init(app: Application, configureClass: KClass<out Any>) {
-        Core.app = app
-        configureIntent = {
+        com.drip.vpn.core.Core.app = app
+        com.drip.vpn.core.Core.configureIntent = {
             PendingIntent.getActivity(it, 0, Intent(it, configureClass.java)
                     .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT), PendingIntent.FLAG_IMMUTABLE)
         }
 
         if (Build.VERSION.SDK_INT >= 24) {  // migrate old files
-            deviceStorage.moveDatabaseFrom(app, Key.DB_PUBLIC)
+            com.drip.vpn.core.Core.deviceStorage.moveDatabaseFrom(app, Key.DB_PUBLIC)
             val old = Acl.getFile(Acl.CUSTOM_RULES_USER, app)
             if (old.canRead()) {
                 Acl.getFile(Acl.CUSTOM_RULES_USER).writeText(old.readText())
@@ -123,25 +125,25 @@ object Core : Configuration.Provider {
         })
 
         // handle data restored/crash
-        if (Build.VERSION.SDK_INT >= 24 && DataStore.directBootAware && user.isUserUnlocked) {
+        if (Build.VERSION.SDK_INT >= 24 && DataStore.directBootAware && com.drip.vpn.core.Core.user.isUserUnlocked) {
             DirectBoot.flushTrafficStats()
         }
-        if (DataStore.publicStore.getLong(Key.assetUpdateTime, -1) != packageInfo.lastUpdateTime) {
+        if (DataStore.publicStore.getLong(Key.assetUpdateTime, -1) != com.drip.vpn.core.Core.packageInfo.lastUpdateTime) {
             val assetManager = app.assets
             try {
                 for (file in assetManager.list("acl")!!) assetManager.open("acl/$file").use { input ->
-                    File(deviceStorage.noBackupFilesDir, file).outputStream().use { output -> input.copyTo(output) }
+                    File(com.drip.vpn.core.Core.deviceStorage.noBackupFilesDir, file).outputStream().use { output -> input.copyTo(output) }
                 }
             } catch (e: IOException) {
                 Timber.w(e)
             }
-            DataStore.publicStore.putLong(Key.assetUpdateTime, packageInfo.lastUpdateTime)
+            DataStore.publicStore.putLong(Key.assetUpdateTime, com.drip.vpn.core.Core.packageInfo.lastUpdateTime)
         }
-        updateNotificationChannels()
+      com.drip.vpn.core.Core.updateNotificationChannels()
     }
 
     override fun getWorkManagerConfiguration() = Configuration.Builder().apply {
-        setDefaultProcessName(app.packageName + ":bg")
+        setDefaultProcessName(com.drip.vpn.core.Core.app.packageName + ":bg")
         setMinimumLoggingLevel(if (BuildConfig.DEBUG) Log.VERBOSE else Log.INFO)
         setExecutor { GlobalScope.launch { it.run() } }
         setTaskExecutor { GlobalScope.launch { it.run() } }
@@ -149,7 +151,7 @@ object Core : Configuration.Provider {
 
     fun updateNotificationChannels() {
         if (Build.VERSION.SDK_INT >= 26) @RequiresApi(26) {
-            notification.createNotificationChannels(listOf(
+            com.drip.vpn.core.Core.notification.createNotificationChannels(listOf(
                     NotificationChannel("service-vpn", "VPN Service",
                             if (Build.VERSION.SDK_INT >= 28) NotificationManager.IMPORTANCE_MIN
                             else NotificationManager.IMPORTANCE_LOW),   // #1355
@@ -158,16 +160,16 @@ object Core : Configuration.Provider {
                     NotificationChannel("service-transproxy", "Transproxy Service",
                             NotificationManager.IMPORTANCE_LOW),
                     SubService.notificationChannel))
-            notification.deleteNotificationChannel("service-nat")   // NAT mode is gone for good
+            com.drip.vpn.core.Core.notification.deleteNotificationChannel("service-nat")   // NAT mode is gone for good
         }
     }
 
-    fun getPackageInfo(packageName: String) = app.packageManager.getPackageInfo(packageName,
+    fun getPackageInfo(packageName: String) = com.drip.vpn.core.Core.app.packageManager.getPackageInfo(packageName,
             if (Build.VERSION.SDK_INT >= 28) PackageManager.GET_SIGNING_CERTIFICATES
             else @Suppress("DEPRECATION") PackageManager.GET_SIGNATURES)!!
 
     fun trySetPrimaryClip(clip: String, isSensitive: Boolean = false) = try {
-        clipboard.setPrimaryClip(ClipData.newPlainText(null, clip).apply {
+        com.drip.vpn.core.Core.clipboard.setPrimaryClip(ClipData.newPlainText(null, clip).apply {
             if (isSensitive && Build.VERSION.SDK_INT >= 24) {
                 description.extras = persistableBundleOf(ClipDescription.EXTRA_IS_SENSITIVE to true)
             }
@@ -178,7 +180,8 @@ object Core : Configuration.Provider {
         false
     }
 
-    fun startService() = ContextCompat.startForegroundService(app, Intent(app, SweetVpnConnection.serviceClass))
-    fun reloadService() = app.sendBroadcast(Intent(Action.RELOAD).setPackage(app.packageName))
-    fun stopService() = app.sendBroadcast(Intent(Action.CLOSE).setPackage(app.packageName))
+    fun startService() = ContextCompat.startForegroundService(com.drip.vpn.core.Core.app, Intent(com.drip.vpn.core.Core.app, DripVpnConnection.serviceClass))
+    fun reloadService() = com.drip.vpn.core.Core.app.sendBroadcast(Intent(Action.RELOAD).setPackage(
+      com.drip.vpn.core.Core.app.packageName))
+    fun stopService() = com.drip.vpn.core.Core.app.sendBroadcast(Intent(Action.CLOSE).setPackage(com.drip.vpn.core.Core.app.packageName))
 }

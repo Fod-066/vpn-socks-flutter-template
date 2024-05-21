@@ -18,15 +18,15 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.acl
+package com.drip.vpn.core.acl
 
 import android.content.Context
 import androidx.recyclerview.widget.SortedList
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.net.Subnet
-import com.sweet.vpn.core.utils.BaseSorter
-import com.sweet.vpn.core.utils.URLSorter
-import com.sweet.vpn.core.utils.asIterable
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.net.Subnet
+import com.drip.vpn.core.utils.BaseSorter
+import com.drip.vpn.core.utils.URLSorter
+import com.drip.vpn.core.utils.asIterable
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.runBlocking
@@ -52,7 +52,7 @@ class Acl {
 
         private val networkAclParser = "^IMPORT_URL\\s*<(.+)>\\s*$".toRegex()
 
-        fun getFile(id: String, context: Context = Core.deviceStorage) = File(context.noBackupFilesDir, "$id.acl")
+        fun getFile(id: String, context: Context = com.drip.vpn.core.Core.deviceStorage) = File(context.noBackupFilesDir, "$id.acl")
 
         var customRules: Acl
             get() {

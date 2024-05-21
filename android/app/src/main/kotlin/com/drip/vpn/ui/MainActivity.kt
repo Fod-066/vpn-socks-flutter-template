@@ -1,27 +1,26 @@
-package com.sweet.vpn.ui
+package com.drip.vpn.ui
 
 import android.content.Intent
 import android.net.Uri
 import android.net.VpnService
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.aidl.SweetVpnConnection
-import com.sweet.vpn.core.aidl.ISweetVpnService
-import com.sweet.vpn.core.background.BaseService
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.aidl.DripVpnConnection
+import com.drip.vpn.core.aidl.IDripVpnService
 import io.flutter.embedding.android.FlutterActivity
 import timber.log.Timber
-import com.sweet.vpn.core.background.BaseService.State.*
-import com.sweet.vpn.core.background.BaseService.State
-import com.sweet.vpn.core.db.Profile
-import com.sweet.vpn.core.db.ProfileManager
-import com.sweet.vpn.ui.channel.CALL_VPN_NATIVE_METHOD
-import com.sweet.vpn.ui.channel.EVENT_CHANNEL_PROFILE
-import com.sweet.vpn.ui.channel.EVENT_CHANNEL_VPN_STATUS
-import com.sweet.vpn.ui.channel.ProfileEventChannelHandler
-import com.sweet.vpn.ui.channel.VpnStatusEventChannelHandler
-import com.sweet.vpn.ui.channel.status
-import com.sweet.vpn.ui.status.VpnStatus
+import com.drip.vpn.core.background.BaseService.State.*
+import com.drip.vpn.core.background.BaseService.State
+import com.drip.vpn.core.db.Profile
+import com.drip.vpn.core.db.ProfileManager
+import com.drip.vpn.ui.channel.CALL_VPN_NATIVE_METHOD
+import com.drip.vpn.ui.channel.EVENT_CHANNEL_PROFILE
+import com.drip.vpn.ui.channel.EVENT_CHANNEL_VPN_STATUS
+import com.drip.vpn.ui.channel.ProfileEventChannelHandler
+import com.drip.vpn.ui.channel.VpnStatusEventChannelHandler
+import com.drip.vpn.ui.channel.status
+import com.drip.vpn.ui.status.VpnStatus
 import com.google.gson.Gson
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
@@ -30,9 +29,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
-class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
+class MainActivity : FlutterActivity(), DripVpnConnection.Callback {
 
-  private val connection = SweetVpnConnection(true)
+  private val connection = DripVpnConnection(true)
   private var currentVpnState = Idle
   private var currentVpnStatus = VpnStatus.Idle
   private val isInitVpnCalled = AtomicBoolean(false)
@@ -72,7 +71,7 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
         "switch" -> {
           (call.arguments as Int?)?.let {
             switch(it.toLong())
-          } ?: kotlin.run{
+          } ?: kotlin.run {
             switch(profiles.random().id)
           }
         }
@@ -156,7 +155,7 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
   }
 
   private fun getAllProfiles(): String {
-    return Gson().toJson(profiles);
+    return Gson().toJson(profiles)
   }
 
   private fun toggle() {
@@ -235,7 +234,7 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
     }
   }
 
-  override fun stateChanged(state: BaseService.State, profileName: String?, msg: String?) {
+  override fun stateChanged(state: State, profileName: String?, msg: String?) {
     log("VPN,stageChanged:$state $currentVpnStatus")
     currentVpnState = state
     if (currentVpnStatus == VpnStatus.Switching && (currentVpnState == Stopping || currentVpnState == Stopped || currentVpnState == Connecting)) {
@@ -254,11 +253,11 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
     connection.connect(this, this)
   }
 
-  override fun onServiceConnected(service: ISweetVpnService) {
+  override fun onServiceConnected(service: IDripVpnService) {
     val state = try {
       State.values()[service.state]
     } catch (e: Exception) {
-      State.Idle
+      Idle
     }
     currentVpnState = state
     log("onServiceConnected,$currentVpnState")
@@ -282,7 +281,7 @@ class MainActivity : FlutterActivity(), SweetVpnConnection.Callback {
   }
 
   private fun log(msg: String) {
-    Timber.tag("SweetVpn").d(msg)
+    Timber.tag("DripVpn").d(msg)
   }
 
   private fun openGp() {

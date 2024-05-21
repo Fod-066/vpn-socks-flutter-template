@@ -20,7 +20,7 @@
 
 package com.github.shadowsocks.acl
 
-import com.sweet.vpn.core.acl.Acl
+import com.drip.vpn.core.acl.Acl
 import org.junit.Assert
 import org.junit.Test
 

@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.preference
+package com.drip.vpn.core.preference
 
 import androidx.preference.PreferenceDataStore
 

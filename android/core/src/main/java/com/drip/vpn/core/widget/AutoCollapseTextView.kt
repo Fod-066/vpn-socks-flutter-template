@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.widget
+package com.drip.vpn.core.widget
 
 import android.content.Context
 import android.graphics.Rect

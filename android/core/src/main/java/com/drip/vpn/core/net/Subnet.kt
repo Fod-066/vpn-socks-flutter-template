@@ -18,9 +18,9 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.net
+package com.drip.vpn.core.net
 
-import com.sweet.vpn.core.utils.parseNumericAddress
+import com.drip.vpn.core.utils.parseNumericAddress
 import java.net.InetAddress
 import java.util.*
 

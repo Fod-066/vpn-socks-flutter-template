@@ -18,17 +18,17 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.plugin
+package com.drip.vpn.core.plugin
 
 import android.content.pm.ComponentInfo
 import android.content.pm.ResolveInfo
 import android.graphics.drawable.Drawable
 import android.os.Build
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.Core.app
-import com.sweet.vpn.core.plugin.PluginManager.loadString
-import com.sweet.vpn.core.utils.signaturesCompat
-import com.sweet.vpn.plugin.PluginContract
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.Core.app
+import com.drip.vpn.core.plugin.PluginManager.loadString
+import com.drip.vpn.core.utils.signaturesCompat
+import com.drip.vpn.plugin.PluginContract
 
 abstract class ResolvedPlugin(protected val resolveInfo: ResolveInfo) : Plugin() {
     protected abstract val componentInfo: ComponentInfo
@@ -52,7 +52,7 @@ abstract class ResolvedPlugin(protected val resolveInfo: ResolveInfo) : Plugin()
     override val defaultConfig by lazy { componentInfo.loadString(PluginContract.METADATA_KEY_DEFAULT_CONFIG) }
     override val packageName: String get() = componentInfo.packageName
     override val trusted by lazy {
-        Core.getPackageInfo(packageName).signaturesCompat.any(PluginManager.trustedSignatures::contains)
+        com.drip.vpn.core.Core.getPackageInfo(packageName).signaturesCompat.any(PluginManager.trustedSignatures::contains)
     }
     override val directBootAware get() = Build.VERSION.SDK_INT < 24 || componentInfo.directBootAware
 }

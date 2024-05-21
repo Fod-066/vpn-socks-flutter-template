@@ -26,13 +26,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import com.drip.vpn.core.Core
 import com.drip.vpn.core.Core.app
 import com.drip.vpn.core.preference.DataStore
 
-class SweetVpnReceiver : BroadcastReceiver() {
+class DripVpnReceiver : BroadcastReceiver() {
     companion object {
-        private val componentName by lazy { ComponentName(app, SweetVpnReceiver::class.java) }
+        private val componentName by lazy { ComponentName(app, DripVpnReceiver::class.java) }
         var enabled: Boolean
             get() = app.packageManager.getComponentEnabledSetting(componentName) ==
                     PackageManager.COMPONENT_ENABLED_STATE_ENABLED

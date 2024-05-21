@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'package:drip_vpn/as/assets.dart';
+import 'package:drip_vpn/channel/channel.dart';
+import 'package:drip_vpn/vpn/vpn_profile.dart';
+import 'package:drip_vpn/widget/single_tapper.dart';
+import 'package:drip_vpn/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sweet_vpn/as/assets.dart';
-import 'package:sweet_vpn/channel/channel.dart';
-import 'package:sweet_vpn/vpn/vpn_profile.dart';
-import 'package:sweet_vpn/widget/single_tapper.dart';
-import 'package:sweet_vpn/widget/style.dart';
 
 typedef OnServerItemClick = Function(int);
 

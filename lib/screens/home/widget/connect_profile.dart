@@ -1,8 +1,8 @@
+import 'package:drip_vpn/as/assets.dart';
+import 'package:drip_vpn/vpn/vpn.dart';
+import 'package:drip_vpn/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sweet_vpn/as/assets.dart';
-import 'package:sweet_vpn/vpn/vpn.dart';
-import 'package:sweet_vpn/widget/style.dart';
 
 class ConnectProfile extends HookConsumerWidget {
   const ConnectProfile({super.key});

@@ -1,10 +1,10 @@
-package com.sweet.vpn.core.background
+package com.drip.vpn.core.background
 
 import android.net.LocalSocket
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.net.ConcurrentLocalSocketListener
-import com.sweet.vpn.core.net.DnsResolverCompat
-import com.sweet.vpn.core.utils.readableMessage
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.net.ConcurrentLocalSocketListener
+import com.drip.vpn.core.net.DnsResolverCompat
+import com.drip.vpn.core.utils.readableMessage
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.TimeoutCancellationException
@@ -18,7 +18,7 @@ import java.io.File
 import java.io.IOException
 
 class LocalDnsWorker(private val resolver: suspend (ByteArray) -> ByteArray) : ConcurrentLocalSocketListener(
-        "LocalDnsThread", File(Core.deviceStorage.noBackupFilesDir, "local_dns_path")), CoroutineScope {
+        "LocalDnsThread", File(com.drip.vpn.core.Core.deviceStorage.noBackupFilesDir, "local_dns_path")), CoroutineScope {
     override fun acceptInternal(socket: LocalSocket) = error("big no no")
     override fun accept(socket: LocalSocket) {
         launch {

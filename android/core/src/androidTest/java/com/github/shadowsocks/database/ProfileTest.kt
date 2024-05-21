@@ -21,7 +21,7 @@
 package com.github.shadowsocks.database
 
 import androidx.core.net.toUri
-import com.sweet.vpn.core.db.Profile
+import com.drip.vpn.core.db.Profile
 import org.junit.Assert
 import org.junit.Test
 

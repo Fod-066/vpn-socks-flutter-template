@@ -18,10 +18,10 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.plugin
+package com.drip.vpn.core.plugin
 
-import com.sweet.vpn.plugin.PluginOptions
-import com.sweet.vpn.core.utils.Commandline
+import com.drip.vpn.plugin.PluginOptions
+import com.drip.vpn.core.utils.Commandline
 import timber.log.Timber
 import java.util.*
 

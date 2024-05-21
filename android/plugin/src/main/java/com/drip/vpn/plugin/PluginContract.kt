@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.plugin
+package com.drip.vpn.plugin
 
 /**
  * The contract between the plugin provider and host. Contains definitions for the supported actions, extras, etc.

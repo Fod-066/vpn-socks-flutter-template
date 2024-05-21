@@ -18,14 +18,14 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.acl
+package com.drip.vpn.core.acl
 
 import android.content.Context
 import android.os.Build
 import androidx.work.*
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.Core.app
-import com.sweet.vpn.core.utils.useCancellable
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.Core.app
+import com.drip.vpn.core.utils.useCancellable
 import timber.log.Timber
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -37,7 +37,7 @@ class AclSyncer(context: Context, workerParams: WorkerParameters) : CoroutineWor
         private const val KEY_ROUTE = "route"
 
         fun schedule(route: String) {
-            if (Build.VERSION.SDK_INT >= 24 && !Core.user.isUserUnlocked) return    // work does not support this
+            if (Build.VERSION.SDK_INT >= 24 && !com.drip.vpn.core.Core.user.isUserUnlocked) return    // work does not support this
             WorkManager.getInstance(app).enqueueUniqueWork(
                     route, ExistingWorkPolicy.REPLACE, OneTimeWorkRequestBuilder<AclSyncer>().run {
                 setInputData(Data.Builder().putString(KEY_ROUTE, route).build())

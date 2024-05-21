@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.utils
+package com.drip.vpn.core.utils
 
 object Key {
     /**

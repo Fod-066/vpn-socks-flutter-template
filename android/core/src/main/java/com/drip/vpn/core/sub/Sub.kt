@@ -18,12 +18,12 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.sub
+package com.drip.vpn.core.sub
 
 import androidx.recyclerview.widget.SortedList
-import com.sweet.vpn.core.preference.DataStore
-import com.sweet.vpn.core.utils.URLSorter
-import com.sweet.vpn.core.utils.asIterable
+import com.drip.vpn.core.preference.DataStore
+import com.drip.vpn.core.utils.URLSorter
+import com.drip.vpn.core.utils.asIterable
 import java.io.Reader
 import java.net.URL
 

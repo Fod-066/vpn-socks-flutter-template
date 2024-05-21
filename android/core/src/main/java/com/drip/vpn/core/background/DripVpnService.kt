@@ -31,7 +31,6 @@ import android.os.ParcelFileDescriptor
 import android.system.ErrnoException
 import android.system.Os
 import android.system.OsConstants
-import com.drip.vpn.core.Core
 import com.drip.vpn.core.acl.Acl
 import com.drip.vpn.core.R
 import com.drip.vpn.core.net.ConcurrentLocalSocketListener
@@ -51,7 +50,7 @@ import java.io.IOException
 import java.net.URL
 import android.net.VpnService as BaseVpnService
 
-class SweetVpnService : BaseVpnService(), BaseService.Interface {
+class DripVpnService : BaseVpnService(), BaseService.Interface {
     companion object {
         private const val VPN_MTU = 1500
         private const val PRIVATE_VLAN4_CLIENT = "172.19.0.1"

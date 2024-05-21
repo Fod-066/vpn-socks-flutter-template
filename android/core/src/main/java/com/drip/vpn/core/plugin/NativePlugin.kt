@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.plugin
+package com.drip.vpn.core.plugin
 
 import android.content.pm.ResolveInfo
 

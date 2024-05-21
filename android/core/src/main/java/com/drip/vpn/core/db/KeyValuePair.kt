@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.db
+package com.drip.vpn.core.db
 
 import androidx.room.*
 import java.io.ByteArrayOutputStream

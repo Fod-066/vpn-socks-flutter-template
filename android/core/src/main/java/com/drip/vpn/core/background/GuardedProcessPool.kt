@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.background
+package com.drip.vpn.core.background
 
 import android.os.Build
 import android.os.SystemClock
@@ -26,8 +26,8 @@ import android.system.ErrnoException
 import android.system.Os
 import android.system.OsConstants
 import androidx.annotation.MainThread
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.utils.Commandline
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.utils.Commandline
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import timber.log.Timber
@@ -51,7 +51,7 @@ class GuardedProcessPool(private val onFatal: suspend (IOException) -> Unit) : C
         } catch (_: IOException) { }    // ignore
 
         fun start() {
-            process = ProcessBuilder(cmd).directory(Core.deviceStorage.noBackupFilesDir).start()
+            process = ProcessBuilder(cmd).directory(com.drip.vpn.core.Core.deviceStorage.noBackupFilesDir).start()
         }
 
         suspend fun looper(onRestartCallback: (suspend () -> Unit)?) {

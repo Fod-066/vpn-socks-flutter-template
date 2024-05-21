@@ -20,7 +20,7 @@
 
 @file:JvmName("Utils")
 
-package com.sweet.vpn.plugin
+package com.drip.vpn.plugin
 
 import android.os.Parcelable
 import androidx.fragment.app.DialogFragment

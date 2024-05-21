@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.background
+package com.drip.vpn.core.background
 
 import android.app.Service
 import android.content.Context
@@ -29,17 +29,16 @@ import android.os.IBinder
 import android.os.RemoteCallbackList
 import android.os.RemoteException
 import androidx.core.content.ContextCompat
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.Core.app
-import com.sweet.vpn.core.acl.Acl
-import com.sweet.vpn.core.aidl.ISweetVpnService
-import com.sweet.vpn.core.aidl.ISweetVpnServiceCallback
-import com.sweet.vpn.core.aidl.TrafficStats
-import com.sweet.vpn.core.net.DnsResolverCompat
-import com.sweet.vpn.core.preference.DataStore
-import com.sweet.vpn.core.utils.Action
-import com.sweet.vpn.core.utils.broadcastReceiver
-import com.sweet.vpn.core.utils.readableMessage
+import com.drip.vpn.core.Core.app
+import com.drip.vpn.core.acl.Acl
+import com.drip.vpn.core.aidl.IDripVpnService
+import com.drip.vpn.core.aidl.IDripVpnServiceCallback
+import com.drip.vpn.core.aidl.TrafficStats
+import com.drip.vpn.core.net.DnsResolverCompat
+import com.drip.vpn.core.preference.DataStore
+import com.drip.vpn.core.utils.Action
+import com.drip.vpn.core.utils.broadcastReceiver
+import com.drip.vpn.core.utils.readableMessage
 //import com.google.firebase.analytics.FirebaseAnalytics
 //import com.google.firebase.analytics.ktx.analytics
 //import com.google.firebase.analytics.ktx.logEvent
@@ -99,9 +98,9 @@ object BaseService {
         }
     }
 
-    class Binder(private var data: Data? = null) : ISweetVpnService.Stub(), CoroutineScope, AutoCloseable {
-        private val callbacks = object : RemoteCallbackList<ISweetVpnServiceCallback>() {
-            override fun onCallbackDied(callback: ISweetVpnServiceCallback?, cookie: Any?) {
+    class Binder(private var data: Data? = null) : IDripVpnService.Stub(), CoroutineScope, AutoCloseable {
+        private val callbacks = object : RemoteCallbackList<IDripVpnServiceCallback>() {
+            override fun onCallbackDied(callback: IDripVpnServiceCallback?, cookie: Any?) {
                 super.onCallbackDied(callback, cookie)
                 stopListeningForBandwidth(callback ?: return)
             }
@@ -113,11 +112,11 @@ object BaseService {
         override fun getState(): Int = (data?.state ?: State.Idle).ordinal
         override fun getProfileName(): String = data?.proxy?.profile?.name ?: "Idle"
 
-        override fun registerCallback(cb: ISweetVpnServiceCallback) {
+        override fun registerCallback(cb: IDripVpnServiceCallback) {
             callbacks.register(cb)
         }
 
-        private fun broadcast(work: (ISweetVpnServiceCallback) -> Unit) {
+        private fun broadcast(work: (IDripVpnServiceCallback) -> Unit) {
             val count = callbacks.beginBroadcast()
             try {
                 repeat(count) {
@@ -153,7 +152,7 @@ object BaseService {
             }
         }
 
-        override fun startListeningForBandwidth(cb: ISweetVpnServiceCallback, timeout: Long) {
+        override fun startListeningForBandwidth(cb: IDripVpnServiceCallback, timeout: Long) {
             launch {
                 if (bandwidthListeners.isEmpty() and (bandwidthListeners.put(cb.asBinder(), timeout) == null)) {
                     check(looper == null)
@@ -181,7 +180,7 @@ object BaseService {
             }
         }
 
-        override fun stopListeningForBandwidth(cb: ISweetVpnServiceCallback) {
+        override fun stopListeningForBandwidth(cb: IDripVpnServiceCallback) {
             launch {
                 if (bandwidthListeners.remove(cb.asBinder()) != null && bandwidthListeners.isEmpty()) {
                     looper!!.cancel()
@@ -190,7 +189,7 @@ object BaseService {
             }
         }
 
-        override fun unregisterCallback(cb: ISweetVpnServiceCallback) {
+        override fun unregisterCallback(cb: IDripVpnServiceCallback) {
             stopListeningForBandwidth(cb)   // saves an RPC, and safer
             callbacks.unregister(cb)
         }
@@ -232,17 +231,17 @@ object BaseService {
         val isVpnService get() = false
 
         suspend fun startProcesses() {
-            val context = if (Build.VERSION.SDK_INT < 24 || Core.user.isUserUnlocked) app else Core.deviceStorage
+            val context = if (Build.VERSION.SDK_INT < 24 || com.drip.vpn.core.Core.user.isUserUnlocked) app else com.drip.vpn.core.Core.deviceStorage
             val configRoot = context.noBackupFilesDir
             val udpFallback = data.udpFallback
             data.proxy!!.start(this,
-                    File(Core.deviceStorage.noBackupFilesDir, "stat_main"),
+                    File(com.drip.vpn.core.Core.deviceStorage.noBackupFilesDir, "stat_main"),
                     File(configRoot, CONFIG_FILE),
                     if (udpFallback == null && data.proxy?.plugin == null) "tcp_and_udp" else "tcp_only")
             if (udpFallback?.plugin != null) throw ExpectedExceptionWrapper(IllegalStateException(
                     "UDP fallback cannot have plugins"))
             udpFallback?.start(this,
-                    File(Core.deviceStorage.noBackupFilesDir, "stat_udp"),
+                    File(com.drip.vpn.core.Core.deviceStorage.noBackupFilesDir, "stat_udp"),
                     File(configRoot, CONFIG_FILE_UDP),
                     "udp_only", false)
             data.localDns = LocalDnsWorker(this::rawResolver).apply { start() }
@@ -298,7 +297,7 @@ object BaseService {
 
                 // stop the service if nothing has bound to it
                 if (restart) startRunner() else {
-                    SweetVpnReceiver.enabled = false
+                    DripVpnReceiver.enabled = false
                     stopSelf()
                 }
             }
@@ -314,7 +313,7 @@ object BaseService {
         fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
             val data = data
             if (data.state != State.Stopped) return Service.START_NOT_STICKY
-            val expanded = Core.currentProfile
+            val expanded = com.drip.vpn.core.Core.currentProfile
             this as Context
             if (expanded == null) {
                 // gracefully shutdown: https://stackoverflow.com/q/47337857/2245107
@@ -332,7 +331,7 @@ object BaseService {
                 return Service.START_NOT_STICKY
             }
 
-            SweetVpnReceiver.enabled = DataStore.persistAcrossReboot
+            DripVpnReceiver.enabled = DataStore.persistAcrossReboot
             if (!data.closeReceiverRegistered) {
                 ContextCompat.registerReceiver(this, data.closeReceiver, IntentFilter().apply {
                     addAction(Action.RELOAD)

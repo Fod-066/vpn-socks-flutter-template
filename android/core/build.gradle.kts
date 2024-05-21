@@ -21,7 +21,7 @@ configure<com.github.megatronking.stringfog.plugin.StringFogExtension> {
 setupCore()
 
 android {
-    namespace = "com.sweet.vpn.core"
+    namespace = "com.drip.vpn.core"
 
     defaultConfig {
         consumerProguardFiles("proguard-rules.pro")
@@ -46,7 +46,7 @@ android {
 
 cargo {
     module = "src/main/rust/shadowsocks-rust"
-    libname = "svcore"
+    libname = "dvmain"
     targets = listOf("arm", "arm64",/* "x86", "x86_64"*/)
     profile = findProperty("CARGO_PROFILE")?.toString() ?: currentFlavor
     extraCargoBuildArguments = listOf("--bin", libname!!)

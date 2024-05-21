@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.sub
+package com.drip.vpn.core.sub
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -33,17 +33,17 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.db.Profile
-import com.sweet.vpn.core.db.ProfileManager
-import com.sweet.vpn.core.preference.DataStore
-import com.sweet.vpn.core.utils.*
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.db.Profile
+import com.drip.vpn.core.db.ProfileManager
+import com.drip.vpn.core.preference.DataStore
+import com.drip.vpn.core.utils.*
 import com.google.gson.JsonStreamParser
-import com.sweet.vpn.core.utils.Action
-import com.sweet.vpn.core.utils.asIterable
-import com.sweet.vpn.core.utils.broadcastReceiver
-import com.sweet.vpn.core.utils.readableMessage
-import com.sweet.vpn.core.utils.useCancellable
+import com.drip.vpn.core.utils.Action
+import com.drip.vpn.core.utils.asIterable
+import com.drip.vpn.core.utils.broadcastReceiver
+import com.drip.vpn.core.utils.readableMessage
+import com.drip.vpn.core.utils.useCancellable
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.io.File
@@ -85,7 +85,7 @@ class SubService : Service(), CoroutineScope {
                     color = Color.BLACK
                     priority = NotificationCompat.PRIORITY_LOW
                     addAction(NotificationCompat.Action.Builder(
-                            com.sweet.vpn.plugin.R.drawable.ic_navigation_close,
+                            com.drip.vpn.plugin.R.drawable.ic_navigation_close,
                             "Stop",
                             PendingIntent.getBroadcast(this@SubService, 0,
                                     Intent(Action.ABORT).setPackage(packageName), PendingIntent.FLAG_IMMUTABLE)).apply {
@@ -98,13 +98,13 @@ class SubService : Service(), CoroutineScope {
 //                    setSmallIcon(R.drawable.ic_file_cloud_download)
                     setWhen(0)
                 }
-                Core.notification.notify(NOTIFICATION_ID, notification.build())
+                com.drip.vpn.core.Core.notification.notify(NOTIFICATION_ID, notification.build())
                 counter = 0
                 val workers = urls.asIterable().map { url -> fetchJsonAsync(url, urls.size(), notification) }
                 try {
                     val localJsons = workers.awaitAll()
                     withContext(Dispatchers.Main) {
-                        Core.notification.notify(NOTIFICATION_ID, notification.apply {
+                        com.drip.vpn.core.Core.notification.notify(NOTIFICATION_ID, notification.apply {
                             setContentTitle("Finishing up…")
                             setProgress(0, 0, true)
                         }.build())
@@ -118,7 +118,7 @@ class SubService : Service(), CoroutineScope {
                         } catch (_: Exception) { }
                     }
                     GlobalScope.launch(Dispatchers.Main) {
-                        Core.notification.cancel(NOTIFICATION_ID)
+                        com.drip.vpn.core.Core.notification.cancel(NOTIFICATION_ID)
                         idle.value = true
                     }
                     check(worker != null)
@@ -147,7 +147,7 @@ class SubService : Service(), CoroutineScope {
         } finally {
             withContext(Dispatchers.Main) {
                 counter += 1
-                Core.notification.notify(NOTIFICATION_ID, notification.apply {
+                com.drip.vpn.core.Core.notification.notify(NOTIFICATION_ID, notification.apply {
                     setContentTitle("Syncing...")
                     setProgress(max, counter, false)
                 }.build())

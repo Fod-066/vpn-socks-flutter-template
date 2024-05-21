@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.utils
+package com.drip.vpn.core.utils
 
 import android.app.Activity
 import android.content.Context
@@ -26,8 +26,8 @@ import android.content.Intent
 import android.net.VpnService
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.preference.DataStore
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.preference.DataStore
 import timber.log.Timber
 
 private val jsonMimeTypes = arrayOf("application/*", "text/*")
@@ -50,14 +50,14 @@ class StartService : ActivityResultContract<Void?, Boolean>() {
             cachedIntent = intent
             return null
         }
-        Core.startService()
+        com.drip.vpn.core.Core.startService()
         return SynchronousResult(false)
     }
 
     override fun createIntent(context: Context, input: Void?) = cachedIntent!!.also { cachedIntent = null }
 
     override fun parseResult(resultCode: Int, intent: Intent?) = if (resultCode == Activity.RESULT_OK) {
-        Core.startService()
+        com.drip.vpn.core.Core.startService()
         false
     } else {
         Timber.e("Failed to start VpnService: $intent")

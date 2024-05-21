@@ -18,14 +18,14 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.net
+package com.drip.vpn.core.net
 
 import android.annotation.TargetApi
 import android.net.DnsResolver
 import android.net.Network
 import android.os.Build
 import android.os.CancellationSignal
-import com.sweet.vpn.core.Core
+import com.drip.vpn.core.Core
 import kotlinx.coroutines.*
 import org.xbill.DNS.*
 import java.io.IOException
@@ -80,7 +80,7 @@ sealed class DnsResolverCompat {
          * See also: https://issuetracker.google.com/issues/133874590
          */
         private val unboundedIO by lazy {
-            if (Core.activity.isLowRamDevice) Dispatchers.IO
+            if (com.drip.vpn.core.Core.activity.isLowRamDevice) Dispatchers.IO
             else Executors.newCachedThreadPool().asCoroutineDispatcher()
         }
 
@@ -145,7 +145,7 @@ sealed class DnsResolverCompat {
          */
         override fun execute(command: Runnable) = command.run()
 
-        private val activeNetwork get() = Core.connectivity.activeNetwork ?: throw IOException("no network")
+        private val activeNetwork get() = com.drip.vpn.core.Core.connectivity.activeNetwork ?: throw IOException("no network")
 
         override suspend fun resolve(network: Network, host: String): Array<InetAddress> {
             return suspendCancellableCoroutine { cont ->

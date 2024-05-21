@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.plugin
+package com.drip.vpn.plugin
 
 import android.app.Activity
 import android.content.DialogInterface

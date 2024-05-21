@@ -1,17 +1,17 @@
 import 'dart:async';
 
+import 'package:drip_vpn/channel/channel.dart';
+import 'package:drip_vpn/screens/home/widget/widget.dart';
+import 'package:drip_vpn/screens/screens.dart';
+import 'package:drip_vpn/vpn/pod.dart';
+import 'package:drip_vpn/vpn/vpn_connect_time.dart';
+import 'package:drip_vpn/vpn/vpn_profile.dart';
+import 'package:drip_vpn/vpn/vpn_status.dart';
+import 'package:drip_vpn/widget/app_back.dart';
+import 'package:drip_vpn/widget/style.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sweet_vpn/channel/channel.dart';
-import 'package:sweet_vpn/screens/home/widget/widget.dart';
-import 'package:sweet_vpn/screens/screens.dart';
-import 'package:sweet_vpn/vpn/pod.dart';
-import 'package:sweet_vpn/vpn/vpn_connect_time.dart';
-import 'package:sweet_vpn/vpn/vpn_profile.dart';
-import 'package:sweet_vpn/vpn/vpn_status.dart';
-import 'package:sweet_vpn/widget/app_back.dart';
-import 'package:sweet_vpn/widget/style.dart';
 
 class HomeScreen extends StatefulHookConsumerWidget {
   const HomeScreen({super.key});

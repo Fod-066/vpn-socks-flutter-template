@@ -18,14 +18,14 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.db
+package com.drip.vpn.core.db
 
 import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.util.LongSparseArray
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.preference.DataStore
-import com.sweet.vpn.core.utils.DirectBoot
-import com.sweet.vpn.core.utils.forEachTry
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.preference.DataStore
+import com.drip.vpn.core.utils.DirectBoot
+import com.drip.vpn.core.utils.forEachTry
 import com.google.gson.JsonStreamParser
 import org.json.JSONArray
 import timber.log.Timber
@@ -68,7 +68,7 @@ object ProfileManager {
         val profiles = if (replace) getAllProfiles()?.associateBy { it.formattedAddress } else null
         val feature = if (replace) {
             profiles?.values?.singleOrNull { it.id == DataStore.profileId }
-        } else Core.currentProfile?.main
+        } else com.drip.vpn.core.Core.currentProfile?.main
         val lazyClear = lazy { clear() }
         jsons.asIterable().forEachTry { json ->
           Profile.parseJson(
@@ -117,7 +117,7 @@ object ProfileManager {
     fun delProfile(id: Long) {
         check(PrivateDatabase.profileDao.delete(id) == 1)
         listener?.onRemove(id)
-        if (id in Core.activeProfileIds && DataStore.directBootAware) DirectBoot.clean()
+        if (id in com.drip.vpn.core.Core.activeProfileIds && DataStore.directBootAware) DirectBoot.clean()
     }
 
     @Throws(SQLException::class)

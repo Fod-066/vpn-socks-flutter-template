@@ -1,12 +1,12 @@
-package com.sweet.vpn.ui.app
+package com.drip.vpn.ui.app
 
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.ui.MainActivity
+import com.drip.vpn.core.Core
+import com.drip.vpn.ui.MainActivity
 import io.flutter.app.FlutterApplication
 
 class App : FlutterApplication() {
   override fun onCreate() {
     super.onCreate()
-    Core.init(this, MainActivity::class)
+    com.drip.vpn.core.Core.init(this, MainActivity::class)
   }
 }

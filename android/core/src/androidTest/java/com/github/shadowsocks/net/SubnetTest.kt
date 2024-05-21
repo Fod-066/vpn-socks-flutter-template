@@ -1,7 +1,7 @@
 package com.github.shadowsocks.net
 
 import android.net.InetAddresses.parseNumericAddress
-import com.sweet.vpn.core.net.Subnet
+import com.drip.vpn.core.net.Subnet
 import org.junit.Assert
 import org.junit.Test
 import java.net.InetAddress

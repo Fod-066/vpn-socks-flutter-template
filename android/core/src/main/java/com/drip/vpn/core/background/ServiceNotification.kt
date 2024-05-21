@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.background
+package com.drip.vpn.core.background
 
 import android.app.PendingIntent
 import android.app.Service
@@ -33,11 +33,11 @@ import android.text.format.Formatter
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.getSystemService
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.aidl.ISweetVpnServiceCallback
-import com.sweet.vpn.core.aidl.TrafficStats
-import com.sweet.vpn.core.R
-import com.sweet.vpn.core.utils.Action
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.aidl.IDripVpnServiceCallback
+import com.drip.vpn.core.aidl.TrafficStats
+import com.drip.vpn.core.R
+import com.drip.vpn.core.utils.Action
 
 /**
   * User can customize visibility of notification since Android 8.
@@ -51,8 +51,8 @@ import com.sweet.vpn.core.utils.Action
  */
 class ServiceNotification(private val service: BaseService.Interface, profileName: String,
                           channel: String, visible: Boolean = false) : BroadcastReceiver() {
-    private val callback: ISweetVpnServiceCallback by lazy {
-        object : ISweetVpnServiceCallback.Stub() {
+    private val callback: IDripVpnServiceCallback by lazy {
+        object : IDripVpnServiceCallback.Stub() {
             override fun stateChanged(state: Int, profileName: String?, msg: String?) { }   // ignore
             override fun trafficUpdated(profileId: Long, stats: TrafficStats) {
                 if (profileId != 0L) return
@@ -76,7 +76,7 @@ class ServiceNotification(private val service: BaseService.Interface, profileNam
             .setColor(Color.BLACK)
             .setTicker("Start")
             .setContentTitle(profileName)
-            .setContentIntent(Core.configureIntent(service))
+            .setContentIntent(com.drip.vpn.core.Core.configureIntent(service))
 //            .setSmallIcon(R.drawable.ic_service_active)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
             .setPriority(if (visible) NotificationCompat.PRIORITY_LOW else NotificationCompat.PRIORITY_MIN)
@@ -84,7 +84,7 @@ class ServiceNotification(private val service: BaseService.Interface, profileNam
     init {
         service as Context
         val closeAction = NotificationCompat.Action.Builder(
-          com.sweet.vpn.plugin.R.drawable.ic_navigation_close,
+          com.drip.vpn.plugin.R.drawable.ic_navigation_close,
                 "Stop",
                 PendingIntent.getBroadcast(service, 0, Intent(Action.CLOSE).setPackage(service.packageName),
                     PendingIntent.FLAG_IMMUTABLE)).apply {

@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.db
+package com.drip.vpn.core.db
 
 import androidx.room.Database
 import androidx.room.Room
@@ -26,9 +26,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.sweet.vpn.core.Core.app
-import com.sweet.vpn.core.db.migration.RecreateSchemaMigration
-import com.sweet.vpn.core.utils.Key
+import com.drip.vpn.core.Core.app
+import com.drip.vpn.core.db.migration.RecreateSchemaMigration
+import com.drip.vpn.core.utils.Key
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

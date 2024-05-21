@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.background
+package com.drip.vpn.core.background
 
 import android.system.ErrnoException
 import android.system.Os
@@ -30,8 +30,8 @@ import java.io.IOException
 
 object Executable {
 //    const val REDSOCKS = "libredsocks.so"
-    const val SS_LOCAL = "libsvcore.so"
-    const val TUN2SOCKS = "libsvsub.so"
+    const val SS_LOCAL = "libdvmain.so"
+    const val TUN2SOCKS = "libdvsec.so"
 
     private val EXECUTABLES = setOf(SS_LOCAL, /*REDSOCKS,*/ TUN2SOCKS)
 

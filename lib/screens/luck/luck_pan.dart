@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
+import 'package:drip_vpn/as/assets.dart';
 import 'package:flutter/material.dart';
-import 'package:sweet_vpn/as/assets.dart';
 
 class LuckPan extends StatefulWidget {
   const LuckPan({super.key, required this.onFinished});

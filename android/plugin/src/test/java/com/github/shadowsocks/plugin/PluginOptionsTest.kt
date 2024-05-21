@@ -20,7 +20,7 @@
 
 package com.github.shadowsocks.plugin
 
-import com.sweet.vpn.plugin.PluginOptions
+import com.drip.vpn.plugin.PluginOptions
 import org.junit.Assert
 import org.junit.Test
 

@@ -1,6 +1,6 @@
+import 'package:drip_vpn/widget/single_tapper.dart';
+import 'package:drip_vpn/widget/style.dart';
 import 'package:flutter/material.dart';
-import 'package:sweet_vpn/widget/single_tapper.dart';
-import 'package:sweet_vpn/widget/style.dart';
 
 // ignore: must_be_immutable
 class SettingButton extends StatelessWidget {
