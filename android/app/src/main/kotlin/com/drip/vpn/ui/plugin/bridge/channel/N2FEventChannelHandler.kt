@@ -3,10 +3,7 @@ package com.drip.vpn.ui.plugin.bridge.channel
 import androidx.annotation.UiThread
 import com.drip.vpn.ui.utils.Logger
 import com.google.gson.Gson
-import com.we.sv.event.EventConvert
-import com.we.sv.logger.Logger
 import io.flutter.plugin.common.EventChannel
-import kotlin.math.sin
 
 class N2FEventChannelHandler : EventChannel.StreamHandler {
 
@@ -14,7 +11,7 @@ class N2FEventChannelHandler : EventChannel.StreamHandler {
 
   private val gson = Gson()
 
-  private val omissionEvents = mutableListOf<Any>()
+  private val omissionEvents = mutableListOf<String>()
 
   override fun onListen(
     arguments: Any?,
@@ -34,13 +31,12 @@ class N2FEventChannelHandler : EventChannel.StreamHandler {
   }
 
   @UiThread
-  fun send(any: Any) {
-    var msg = gson.toJson(any)
-    Logger.d("EVENT", "send $msg ${sink == null}")
+  fun send(event: String) {
+    Logger.d("EVENT", "send $event ${sink == null}")
     if (sink == null) {
-      omissionEvents.add(any)
+      omissionEvents.add(event)
     } else {
-      sink?.success(msg)
+      sink?.success(event)
     }
   }
 }

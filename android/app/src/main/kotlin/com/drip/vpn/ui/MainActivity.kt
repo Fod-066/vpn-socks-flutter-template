@@ -14,16 +14,13 @@ import com.drip.vpn.core.background.BaseService.State.*
 import com.drip.vpn.core.background.BaseService.State
 import com.drip.vpn.core.db.Profile
 import com.drip.vpn.core.db.ProfileManager
-import com.drip.vpn.ui.channel.CALL_VPN_NATIVE_METHOD
-import com.drip.vpn.ui.channel.EVENT_CHANNEL_PROFILE
-import com.drip.vpn.ui.channel.EVENT_CHANNEL_VPN_STATUS
-import com.drip.vpn.ui.channel.ProfileEventChannelHandler
-import com.drip.vpn.ui.channel.VpnStatusEventChannelHandler
-import com.drip.vpn.ui.channel.status
+import com.drip.vpn.ui.plugin.bridge.Bridge
+import com.drip.vpn.ui.plugin.bridge.channel.CALL_VPN_NATIVE_METHOD
+import com.drip.vpn.ui.plugin.bridge.channel.status
+import com.drip.vpn.ui.plugin.bridge.event.Event
 import com.drip.vpn.ui.status.VpnStatus
 import com.google.gson.Gson
 import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -36,10 +33,6 @@ class MainActivity : FlutterActivity(), DripVpnConnection.Callback {
   private var currentVpnStatus = VpnStatus.Idle
   private val isInitVpnCalled = AtomicBoolean(false)
   private val profiles = mutableListOf<Profile>()
-  private lateinit var vpnStatusEC: EventChannel
-  private lateinit var profileEC: EventChannel
-  private lateinit var vpnStatusECHandler: VpnStatusEventChannelHandler
-  private lateinit var profileECHandler: ProfileEventChannelHandler
   private var lastConnectionIsSwitching = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +43,8 @@ class MainActivity : FlutterActivity(), DripVpnConnection.Callback {
   override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
     super.configureFlutterEngine(flutterEngine)
     bindNativeMethod(flutterEngine)
-    bindEventChannels(flutterEngine)
+    Bridge.init(flutterEngine.dartExecutor.binaryMessenger)
+//    bindEventChannels(flutterEngine)
   }
 
   private fun bindNativeMethod(flutterEngine: FlutterEngine) {
@@ -93,15 +87,6 @@ class MainActivity : FlutterActivity(), DripVpnConnection.Callback {
         }
       }
     }
-  }
-
-  private fun bindEventChannels(flutterEngine: FlutterEngine) {
-    vpnStatusEC = EventChannel(flutterEngine.dartExecutor.binaryMessenger, EVENT_CHANNEL_VPN_STATUS)
-    profileEC = EventChannel(flutterEngine.dartExecutor.binaryMessenger, EVENT_CHANNEL_PROFILE)
-    vpnStatusECHandler = VpnStatusEventChannelHandler()
-    vpnStatusEC.setStreamHandler(vpnStatusECHandler)
-    profileECHandler = ProfileEventChannelHandler()
-    profileEC.setStreamHandler(profileECHandler)
   }
 
   private fun initVpn() {
@@ -174,7 +159,7 @@ class MainActivity : FlutterActivity(), DripVpnConnection.Callback {
   private fun startVpn(isSwitchProfile: Boolean = false) {
     log("start vpn")
     lifecycleScope.launch {
-      vpnStatusECHandler.send(if (isSwitchProfile) VpnStatus.Switching.state else VpnStatus.Connecting.state)
+      Bridge.sendToFlutter(Event.VpnStateEvent(if (isSwitchProfile) VpnStatus.Switching else VpnStatus.Connecting))
       lastConnectionIsSwitching = isSwitchProfile
       if (isSwitchProfile) {
         currentVpnStatus = VpnStatus.Switching
@@ -188,7 +173,7 @@ class MainActivity : FlutterActivity(), DripVpnConnection.Callback {
   private fun stopVpn() {
     log("stop vpn")
     lifecycleScope.launch {
-      vpnStatusECHandler.send(VpnStatus.Stopping.state)
+      Bridge.sendToFlutter(Event.VpnStateEvent(VpnStatus.Stopping))
 //      delay(2000L)
 //      Core.stopService()
     }
@@ -242,8 +227,8 @@ class MainActivity : FlutterActivity(), DripVpnConnection.Callback {
       return
     }
     currentVpnStatus = currentVpnState.status()
-    vpnStatusECHandler.send(currentVpnStatus.state)
-    profileECHandler.send(if (currentVpnState == Connected) Gson().toJson(Core.currentProfile?.main) else null)
+    Bridge.sendToFlutter(Event.VpnStateEvent(currentVpnStatus))
+    Bridge.sendToFlutter(Event.ProfileEvent(if (currentVpnState == Connected) Core.currentProfile?.main else null))
     log("VPN,send:$currentVpnStatus ${Core.currentProfile?.main?.name}")
   }
 
