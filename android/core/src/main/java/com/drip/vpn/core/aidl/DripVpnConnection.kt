@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.aidl
+package com.drip.vpn.core.aidl
 
 import android.content.ComponentName
 import android.content.Context
@@ -26,11 +26,11 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.os.RemoteException
-import com.sweet.vpn.core.background.BaseService
-import com.sweet.vpn.core.background.SweetVpnService
-import com.sweet.vpn.core.preference.DataStore
-import com.sweet.vpn.core.utils.Action
-import com.sweet.vpn.core.utils.Key
+import com.drip.vpn.core.background.BaseService
+import com.drip.vpn.core.background.SweetVpnService
+import com.drip.vpn.core.preference.DataStore
+import com.drip.vpn.core.utils.Action
+import com.drip.vpn.core.utils.Key
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

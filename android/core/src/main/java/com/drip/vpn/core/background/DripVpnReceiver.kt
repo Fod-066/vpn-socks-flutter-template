@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.background
+package com.drip.vpn.core.background
 
 import android.content.BroadcastReceiver
 import android.content.ComponentName
@@ -26,9 +26,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.Core.app
-import com.sweet.vpn.core.preference.DataStore
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.Core.app
+import com.drip.vpn.core.preference.DataStore
 
 class SweetVpnReceiver : BroadcastReceiver() {
     companion object {
@@ -50,8 +50,8 @@ class SweetVpnReceiver : BroadcastReceiver() {
         val doStart = when (intent.action) {
             Intent.ACTION_BOOT_COMPLETED -> !DataStore.directBootAware
             Intent.ACTION_LOCKED_BOOT_COMPLETED -> DataStore.directBootAware
-            else -> DataStore.directBootAware || Build.VERSION.SDK_INT >= 24 && Core.user.isUserUnlocked
+            else -> DataStore.directBootAware || Build.VERSION.SDK_INT >= 24 && com.drip.vpn.core.Core.user.isUserUnlocked
         }
-        if (doStart) Core.startService()
+        if (doStart) com.drip.vpn.core.Core.startService()
     }
 }

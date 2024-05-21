@@ -1,8 +1,8 @@
-package com.sweet.vpn.core.aidl;
+package com.drip.vpn.core.aidl;
 
-import com.sweet.vpn.core.aidl.TrafficStats;
+import com.drip.vpn.core.aidl.TrafficStats;
 
-oneway interface ISweetVpnServiceCallback {
+oneway interface IDripVpnServiceCallback {
   void stateChanged(int state, String profileName, String msg);
   void trafficUpdated(long profileId, in TrafficStats stats);
   // Traffic data has persisted to database, listener should refetch their data from database

@@ -18,7 +18,7 @@
  *                                                                             *
  *******************************************************************************/
 
-package com.sweet.vpn.core.background
+package com.drip.vpn.core.background
 
 import android.app.Service
 import android.content.Intent
@@ -31,16 +31,16 @@ import android.os.ParcelFileDescriptor
 import android.system.ErrnoException
 import android.system.Os
 import android.system.OsConstants
-import com.sweet.vpn.core.Core
-import com.sweet.vpn.core.acl.Acl
-import com.sweet.vpn.core.R
-import com.sweet.vpn.core.net.ConcurrentLocalSocketListener
-import com.sweet.vpn.core.net.DefaultNetworkListener
-import com.sweet.vpn.core.net.DnsResolverCompat
-import com.sweet.vpn.core.net.Subnet
-import com.sweet.vpn.core.preference.DataStore
-import com.sweet.vpn.core.utils.Key
-import com.sweet.vpn.core.utils.int
+import com.drip.vpn.core.Core
+import com.drip.vpn.core.acl.Acl
+import com.drip.vpn.core.R
+import com.drip.vpn.core.net.ConcurrentLocalSocketListener
+import com.drip.vpn.core.net.DefaultNetworkListener
+import com.drip.vpn.core.net.DnsResolverCompat
+import com.drip.vpn.core.net.Subnet
+import com.drip.vpn.core.preference.DataStore
+import com.drip.vpn.core.utils.Key
+import com.drip.vpn.core.utils.int
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -69,7 +69,7 @@ class SweetVpnService : BaseVpnService(), BaseService.Interface {
     }
 
     private inner class ProtectWorker : ConcurrentLocalSocketListener("ShadowsocksVpnThread",
-            File(Core.deviceStorage.noBackupFilesDir, "protect_path")) {
+            File(com.drip.vpn.core.Core.deviceStorage.noBackupFilesDir, "protect_path")) {
         override fun acceptInternal(socket: LocalSocket) {
             if (socket.inputStream.read() == -1) return
             val success = socket.ancillaryFileDescriptors!!.single()!!.use { fd ->
@@ -161,7 +161,7 @@ class SweetVpnService : BaseVpnService(), BaseService.Interface {
     private suspend fun startVpn(): FileDescriptor {
         val profile = data.proxy!!.profile
         val builder = Builder()
-                .setConfigureIntent(Core.configureIntent(this))
+                .setConfigureIntent(com.drip.vpn.core.Core.configureIntent(this))
                 .setSession(profile.formattedName)
                 .setMtu(VPN_MTU)
                 .addAddress(PRIVATE_VLAN4_CLIENT, 30)
@@ -232,7 +232,7 @@ class SweetVpnService : BaseVpnService(), BaseService.Interface {
 
     private suspend fun sendFd(fd: FileDescriptor) {
         var tries = 0
-        val path = File(Core.deviceStorage.noBackupFilesDir, "sock_path").absolutePath
+        val path = File(com.drip.vpn.core.Core.deviceStorage.noBackupFilesDir, "sock_path").absolutePath
         while (true) try {
             delay(50L shl tries)
             LocalSocket().use { localSocket ->
