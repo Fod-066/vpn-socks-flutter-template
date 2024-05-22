@@ -11,4 +11,16 @@ extension IntExt on int {
 
     return '$hoursStr:$minutesStr:$secondsStr';
   }
+
+  String formatBytes() {
+    if (this < 1024) {
+      return '$this B';
+    } else if (this < 1024 * 1024) {
+      double kilobytes = this / 1024;
+      return '${kilobytes.toStringAsFixed(2)} KB';
+    } else {
+      double megabytes = this / (1024 * 1024);
+      return '${megabytes.toStringAsFixed(2)} MB';
+    }
+  }
 }

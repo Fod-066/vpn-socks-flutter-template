@@ -21,7 +21,7 @@ class _ServersScreenState extends ConsumerState<ServersScreen> {
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SizedBox(height: 32),
+        const SizedBox(height: 48),
         SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 56,
@@ -29,13 +29,22 @@ class _ServersScreenState extends ConsumerState<ServersScreen> {
             alignment: Alignment.center,
             children: [
               Positioned(
-                left: 0,
-                child: IconButton(
-                  onPressed: () => context.pop(),
-                  icon: const Icon(Icons.arrow_back),
+                left: 24,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Color(0xff484855),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    onPressed: () => context.pop(),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
-              const Text('Servers', style: peaceSans),
+              const Text('Server list', style: peaceSans),
             ],
           ),
         ),
@@ -43,7 +52,6 @@ class _ServersScreenState extends ConsumerState<ServersScreen> {
           child: ServerList(
             onServerItemClick: (id) {
               nativeMethod.invokeMethod('switch', id);
-              //GoRouter.of(context).go(home);
               context.pop(true);
             },
           ),

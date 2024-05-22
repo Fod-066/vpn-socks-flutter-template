@@ -17,8 +17,9 @@ class ConnectTimer extends HookConsumerWidget {
     return Text(
       isUseBlackTextColor ? seconds.formatDuration() : '00:00:00',
       style: peaceSans.copyWith(
-        color: isUseBlackTextColor ? Colors.black : const Color(0xffACE0FD),
-        fontSize: 20,
+        color: Colors.white,
+        fontSize: 36,
+        fontWeight: FontWeight.bold,
       ),
     );
   }

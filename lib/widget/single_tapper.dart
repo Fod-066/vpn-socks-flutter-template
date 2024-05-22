@@ -24,6 +24,7 @@ class _SingleTapperState extends State<SingleTapper> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () {
         if (!widget.tappable) return;
         final now = DateTime.timestamp().millisecondsSinceEpoch;

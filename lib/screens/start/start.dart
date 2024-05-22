@@ -1,10 +1,12 @@
 import 'package:drip_vpn/as/assets.dart';
 import 'package:drip_vpn/screens/screens.dart';
 import 'package:drip_vpn/widget/app_back.dart';
-import 'package:drip_vpn/widget/style.dart';
+import 'package:drip_vpn/widget/app_name.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class StartScreen extends StatefulHookConsumerWidget {
   const StartScreen({super.key});
@@ -52,41 +54,21 @@ class _StartScreenState extends ConsumerState<StartScreen> with SingleTickerProv
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Spacer(),
-          AnimatedBuilder(
-            animation: _animation,
-            builder: (context, child) {
-              return Opacity(
-                opacity: _animation.value,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      Assets.assetsImgsLogo,
-                      width: 160,
-                      height: 160,
-                    ),
-                    Text(
-                      'Sweet Watermelon',
-                      style: peaceSans.copyWith(fontSize: 18),
-                    ),
-                  ],
-                ),
-              );
-            },
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(Assets.assetsImgsLogo, width: 113, height: 113),
+              const SizedBox(height: 16),
+              Transform.scale(
+                scale: 1.5,
+                child: const AppName().animate().fadeIn(duration: 1.5.seconds),
+              ),
+            ],
           ),
           const Spacer(),
-          AnimatedBuilder(
-            animation: _animation,
-            builder: (context, child) {
-              return LinearProgressIndicator(
-                backgroundColor: const Color(0xff79CDD7),
-                valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
-                value: _animation.value,
-                minHeight: 6,
-              );
-            },
-          ),
+          LoadingAnimationWidget.staggeredDotsWave(color: Colors.white, size: 80),
+          const Spacer(),
         ],
       ),
     );

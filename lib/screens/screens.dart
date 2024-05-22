@@ -1,7 +1,5 @@
-import 'package:drip_vpn/screens/execute/execute.dart';
 import 'package:drip_vpn/screens/home/home.dart';
-import 'package:drip_vpn/screens/luck/luck.dart';
-import 'package:drip_vpn/screens/result/result.dart';
+import 'package:drip_vpn/screens/purchase/purchase.dart';
 import 'package:drip_vpn/screens/setting/setting.dart';
 import 'package:drip_vpn/screens/sever/servers.dart';
 import 'package:drip_vpn/screens/start/start.dart';
@@ -10,10 +8,8 @@ import 'package:go_router/go_router.dart';
 const String start = '/start';
 const String home = '/home';
 const String setting = '/setting';
-const String executing = '/executing';
-const String result = '/result';
-const String luck = '/luck';
 const String servers = '/servers';
+const String purchase = '/purchase';
 
 final screens = GoRouter(
   routes: [
@@ -30,20 +26,12 @@ final screens = GoRouter(
       builder: (context, state) => const SettingScreen(),
     ),
     GoRoute(
-      path: executing,
-      builder: (context, state) => const ExecuteScreen(),
-    ),
-    GoRoute(
-      path: result,
-      builder: (context, state) => const ResultScreen(),
-    ),
-    GoRoute(
-      path: luck,
-      builder: (context, state) => const LuckScreen(),
-    ),
-    GoRoute(
       path: servers,
       builder: (context, state) => const ServersScreen(),
+    ),
+    GoRoute(
+      path: purchase,
+      builder: (context, state) => const PurchaseScreen(),
     )
   ],
   initialLocation: start,

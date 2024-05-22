@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.drip.vpn.core.Core
 import com.drip.vpn.core.aidl.DripVpnConnection
 import com.drip.vpn.core.aidl.IDripVpnService
+import com.drip.vpn.core.aidl.TrafficStats
 import io.flutter.embedding.android.FlutterActivity
 import timber.log.Timber
 import com.drip.vpn.core.background.BaseService.State.*
@@ -174,8 +175,8 @@ class MainActivity : FlutterActivity(), DripVpnConnection.Callback {
     log("stop vpn")
     lifecycleScope.launch {
       Bridge.sendToFlutter(Event.VpnStateEvent(VpnStatus.Stopping))
-//      delay(2000L)
-//      Core.stopService()
+      delay(2000L)
+      Core.stopService()
     }
   }
 
@@ -249,6 +250,11 @@ class MainActivity : FlutterActivity(), DripVpnConnection.Callback {
 //    eventHandler.send(state.statusStr(false))
   }
 
+  override fun trafficUpdated(profileId: Long, stats: TrafficStats) {
+    super.trafficUpdated(profileId, stats)
+    Bridge.sendToFlutter(Event.SpeedEvent(stats))
+  }
+
   override fun onStart() {
     connection.bandwidthTimeout = 500L
     super.onStart()
@@ -270,7 +276,7 @@ class MainActivity : FlutterActivity(), DripVpnConnection.Callback {
   }
 
   private fun openGp() {
-    val pkgName = ""
+    val pkgName = context.packageName
     val uri = Uri.parse("https://play.google.com/store/apps/developer?id=$pkgName")
     val intent = Intent(Intent.ACTION_VIEW, uri)
     intent.setPackage("com.android.vending")
@@ -279,7 +285,7 @@ class MainActivity : FlutterActivity(), DripVpnConnection.Callback {
 
   private fun openBrowser() {
     val intent = Intent(Intent.ACTION_VIEW)
-    intent.data = Uri.parse("https://google.com")
+    intent.data = Uri.parse("https://sites.google.com/view/dripvpn/")
     startActivity(intent)
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:drip_vpn/as/assets.dart';
 import 'package:drip_vpn/channel/channel.dart';
 import 'package:drip_vpn/vpn/vpn_profile.dart';
 import 'package:drip_vpn/widget/single_tapper.dart';
@@ -54,12 +53,13 @@ class _ServerListState extends ConsumerState<ServerList> {
       children: _profiles!
           .map(
             (e) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 8),
               child: ServerNodeItem(
                 name: e.name,
                 onServerItemClick: widget.onServerItemClick,
                 isConnected: ref.watch(vpnProfileProvider)?.id == e.id,
                 id: e.id,
+                isLocked: _profiles!.indexOf(e) > 0,
               ),
             ),
           )
@@ -75,59 +75,53 @@ class ServerNodeItem extends StatelessWidget {
     required this.onServerItemClick,
     required this.isConnected,
     required this.id,
+    required this.isLocked,
   });
 
   final String name;
   final OnServerItemClick onServerItemClick;
   final bool isConnected;
   final int id;
+  final bool isLocked;
 
   @override
   Widget build(BuildContext context) {
     return SingleTapper(
       onTap: () => onServerItemClick(id),
       child: Container(
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
-        height: 62,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 56,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 12,
-                    top: 17,
-                    child: Container(
-                      height: 32,
-                      width: 32,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(Assets.assetsImgsImgSmart),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 52,
-                    bottom: 12,
-                    child: Text(
-                      name,
-                      style: peaceSans,
-                    ),
-                  ),
-                  Positioned(
-                    right: 14,
-                    bottom: 12,
-                    child: Icon(isConnected ? Icons.check_circle_outline : Icons.radio_button_off),
-                  ),
-                ],
+        decoration: BoxDecoration(
+          color: const Color(0xff17191e),
+          borderRadius: BorderRadius.circular(31),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        alignment: Alignment.center,
+        height: 56,
+        child: SizedBox(
+          height: 56,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Icon(Icons.share_location, color: isConnected ? const Color(0xffcef27e) : Colors.white),
+              const SizedBox(width: 12),
+              Text(
+                name,
+                style: peaceSans.copyWith(color: isConnected ? const Color(0xffcef27e) : Colors.white),
               ),
-            )
-          ],
+              if (isLocked)
+                const Padding(
+                  padding: EdgeInsets.only(left: 8),
+                  child: Icon(
+                    Icons.lock,
+                    color: Colors.white,
+                  ),
+                ),
+              const Spacer(),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: isConnected ? const Color(0xffcef27e) : Colors.white,
+              ),
+            ],
+          ),
         ),
       ),
     );

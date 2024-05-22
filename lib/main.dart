@@ -42,6 +42,14 @@ class _MyAppState extends ConsumerState<MyApp> {
         if (eventName == 'profile_event') {
           ref.read(vpnProfileProvider.notifier).change(eventData);
         }
+        if (eventName == 'speed_event') {
+          try {
+            var traffic = VpnTraffic.from(eventData);
+            ref.read(vpnTrafficPod.notifier).change(traffic);
+          } catch (e) {
+            print('traffic error $e');
+          }
+        }
       },
       onError: (error) {},
       cancelOnError: false,

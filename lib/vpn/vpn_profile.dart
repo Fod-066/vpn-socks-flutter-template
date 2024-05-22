@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class VpnProfile {
@@ -17,13 +15,8 @@ class VpnProfileNotifier extends StateNotifier<VpnProfile?> {
     if (null == data) {
       state = null;
     } else {
-      if (data is String) {
-        var json = jsonDecode(data);
-        if (json != null) {
-          var profile = VpnProfile(name: json['name'], host: json['host'], id: json['id']);
-          state = profile;
-        }
-      }
+      var profile = VpnProfile(name: data['name'], host: data['host'], id: data['id']);
+      state = profile;
     }
   }
 }

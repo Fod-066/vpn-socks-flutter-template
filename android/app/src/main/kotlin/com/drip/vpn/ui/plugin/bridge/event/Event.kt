@@ -1,6 +1,7 @@
 package com.drip.vpn.ui.plugin.bridge.event
 
 import androidx.annotation.Keep
+import com.drip.vpn.core.aidl.TrafficStats
 import com.drip.vpn.core.db.Profile
 import com.drip.vpn.ui.status.VpnStatus
 import com.google.gson.annotations.Expose
@@ -21,6 +22,12 @@ sealed class Event(val name: String, val data: Any? = null) {
     @Transient
     val profile: Profile?
   ) : Event(name = "profile_event", data = profile)
+
+  @Keep
+  class SpeedEvent(
+    @Transient
+    val trafficStats: TrafficStats,
+  ) : Event(name = "speed_event", data = trafficStats)
 
 }
 
